@@ -1,0 +1,356 @@
+DATA TYPES
+========
+Data Type represents the type of data present inside a variable.
+In Python we are not required to specify the type explicitly. Based on value provided,the type will be assigned automatically.
+Hence Python is dynamically Typed Language.
+Python contains the following inbuilt data types
+1) Int
+2) Float
+3) Complex
+4) Bool
+5) Str
+6) Bytes
+7) Bytearray
+8) Range
+9) List
+10) Tuple
+11) Set
+12) Frozense
+13)dict
+14)None
+
+Note: Python contains several inbuilt functions
+
+1) type()
+to check the type of variable
+
+2) id()
+to get address of object
+
+3) print()
+to print the value
+
+In Python everything is an Object
+
+
+int Data Type:
+============
+We can use int data type to represent whole numbers (integral values)
+
+Eg: a = 10
+
+type(a) #int
+
+Note:
+======
+In Python2 we have long data type to represent very large integral values.
+But in Python3 there is no long type explicitly and we can represent long values also by using int type .
+
+
+ Float Data Type:
+==================
+We can use float data type to represent floating point values (decimal values)
+ Eg: f = 1.234
+ type(f) # float
+
+We can also represent floating point values by using exponential form 
+(Scientific Notation)
+
+ Eg: f = 1.2e3  instead of 'e' we can use 'E'
+ print(f) 1200.0
+
+The main advantage of exponential form is we can represent big values in less 
+memory.
+
+
+Complex Data Type:
+==================
+A complex number is of the form
+real + imaginarypart
+Ex: a + bj
+
+‘a’ and ‘b’ contain Intergers OR Floating Point Values
+
+ Eg: 
+  e=3 + 5j
+  type(e)
+ 10 + 5.5j
+ 0.5 + 0.1
+
+
+In the real part if we use int value then we can specify that either by decimal, octal,binary or hexa decimal form.
+
+But imaginary part should be specified only by using decimal form.
+
+a=0B11+5j 
+ print(a) 
+(3+5j) 
+
+a=3+0B11j 
+SyntaxError: invalid syntax
+
+
+Even we can perform operations on complex type values.
+>>> a=10+1.5j 
+>>> b=20+2.5j 
+>>> c=a+b 
+>>> print(c) # (30+4j) 
+
+Note: Complex data type has some inbuilt attributes to retrieve the real part and 
+imaginary part
+
+c = 10.5+3.6j
+c.real  10.5
+c.imag  3.6
+
+We can use complex type generally in scientific Applications and electrical engineering Applications.
+
+
+bool Data Type:
+=================
+We can use this data type to represent boolean values.
+The only allowed values for this data type are:
+True and False
+
+Internally Python represents True as 1 and False as 0
+ 
+b = True
+type(b) bool
+
+Eg:
+a = 10
+b = 20
+c = a<b
+print(c)  True
+
+str Data Type:
+==============
+str represents String data type.
+
+A String is a sequence of characters enclosed within single quotes or double 
+quotes.
+
+s1='durga'
+s2="durga"
+
+
+Note:=
+=======
+In Python the following data types are considered as Fundamental Data types
+int 
+float
+complex
+bool
+str
+
+TYPE CASTING
+=============
+We can convert one type value to another type. This conversion is called Typecasting 
+or Type coersion.
+
+The following are various inbuilt functions for type casting.
+1) int()
+2) float()
+3) complex()
+4) bool()
+
+int():
+======
+ We can use this function to convert values from other types to int
+
+float():
+========
+ We can use float() function to convert other type values to float type.
+
+
+In python we have 33 reserve keywords
+import keyword
+keyword.kwlist
+
+
+
+What is String?
+============
+Any sequence of characters within either single quotes or double quotes is considered as a String.
+Syntax:
+s = 'sainath'
+s = "sainath"
+
+Note:
+======
+In most of other languges like C, C++, Java, a single character with in single quotes 
+is treated as char data type value. 
+
+But in Python we are not having char data type.Hence it 
+is treated as String only.
+Eg:
+>>> ch = 'a'
+>>> type(ch)
+<class 'str'>
+
+
+How to define multi-line String Literals?
+
+We can define multi-line String literals by using triple single or double quotes.
+Eg:
+>>> s = '''Blueyondersolutions'''
+
+We can also use triple quotes to use single quotes or double quotes as symbol inside 
+String literal
+
+1) s = 'This is ' single quote symbol'  Invalid
+2) s = 'This is \' single quote symbol'  Valid
+3) s = "This is ' single quote symbol"  Valid
+4) s = 'This is " double quotes symbol'  Valid
+5) s = 'The "Python Notes" by 'blue' is very helpful'  Invalid
+6) s = "The "Python Notes" by 'blue' is very helpful"  Invalid
+7) s = 'The \"Python Notes\" by \'blue\' is very helpful'  Valid
+8) s = '''The "Python Notes" by 'blue' is very helpful'''  Valid
+
+
+How to Access Characters of a String?
+======================================
+We can access characters of a string by using the following ways.
+1) By using index
+2) By using slice operator
+
+1)Accessing Characters By using Index:
+
+Python supports both +ve and -ve Index.
++ve Index means Left to Right (Forward Direction)
+-ve Index means Right to Left (Backward Direction)
+
+Eg: s = 'durga'
+1) >>> s='durga' 
+2) >>> s[0] 
+3) 'd' 
+4) >>> s[4] 
+5) 'a' 
+6) >>> s[-1] 
+7) 'a' 
+8) >>> s[10] 
+
+IndexError: string index out of range
+
+Note: If we are trying to access characters of a string with out of range index then we will get error saying: IndexError
+
+
+2)Accessing Characters by using Slice Operator:
+===============================================
+Syntax: s[bEginindex:endindex:step]
+
+Begin Index: From where we have to consider slice (substring)
+End Index: We have to terminate the slice (substring) at endindex-1 
+Step: Incremented Value.
+
+Note:
+If we are not specifying bEgin index then it will consider from bEginning of the string.
+
+If we are not specifying end index then it will consider up to end of the string.
+
+The default value for step is 1.
+
+
+s="Learning Python is very very easy!!!" 
+s[1:7:1] #'earnin' 
+s[1:7] # 'earnin' 
+s[1:7:2] # 'eri' 
+s[:7] # 'Learnin' 
+s[7:] # 'g Python is very very easy!!!' 
+s[::] # 'Learning Python is very very easy!!!' 
+s[:] # 'Learning Python is very very easy!!!' 
+s[::-1] # '!!!ysae yrev yrev si nohtyP gninraeL'
+
+
+Behaviour of Slice Operator:
+=============================
+1) s[bEgin:end:step]
+2) Step value can be either +ve or –ve
+3) If +ve then it should be forward direction(left to right) and we have to consider     bEgin to end-1
+4) If -ve then it should be backward direction (right to left) and we have to consider bEgin to end+1.
+
+***Note:
+In the backward direction if end value is -1 then result is always empty.
+In the forward direction if end value is 0 then result is always empty.
+
+
+
+In Forward Direction:
+======================
+default value for bEgin: 0
+default value for end: length of string
+default value for step: +1
+
+In Backward Direction:
+=======================
+default value for bEgin: -1
+default value for end: -(length of string+1)
+Note: Either forward or backward direction, we can take both +ve and -ve values for 
+bEgin and end index.
+
+Slice Operator Case Study:
+====================
+1) S = 'abcdefghij'
+2) s[1:6:2]  'bdf'
+3) s[::1]  'abcdefghij'
+4) s[::-1]  'jihgfedcba'
+5) s[3:7:-1]  ''
+6) s[7:4:-1]  'hgf'
+7) s[0:10000:1]  'abcdefghij'
+8) s[-4:1:-1]  'gfedc'
+9) s[-4:1:-2]  'gec'
+10)s[5:0:1]  ''
+11)s[9:0:0]  ValueError: slice step cannot be zero
+12)s[0:-10:-1]  ''
+13)s[0:-11:-1]  'a'
+14)s[0:0:1]  ''
+15)s[0:-9:-2]  ''
+16)s[-5:-9:-2]  'fd'
+17)s[10:-1:-1]  ''
+18)s[10000:2:-1]  'jihgfed'
+
+
+Mathematical Operators for String:
+==================================
+We can apply the following mathematical operators for Strings.
+1) + operator for concatenation
+2) * operator for repetition 
+
+print("durga"+"rao")  durgarao
+print("durga"*2)  durgadurga
+
+Note: Slice operator never raises IndexError
+
+Note: 
+1) To use + operator for Strings, compulsory both arguments should be str type.
+2) To use * operator for Strings, compulsory one argument should be str and other
+argument should be int.
+
+len() in-built Function:
+=======================
+We can use len() function to find the number of characters present in the string.
+Eg:
+s = 'durga'
+print(len(s))  5
+input():
+========
+input() function can be used to read data directly in our required format.
+We are not required to perform type casting.
+
+x = input("Enter Value)
+type(x)
+
+
+Ex:
+===
+write a python program named add.py to read two inputs from keyboard and perform 
+sum of two numbers.
+
+
+
+
+
+
+
+
+
