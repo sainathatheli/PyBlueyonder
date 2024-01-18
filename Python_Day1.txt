@@ -332,6 +332,7 @@ We can use len() function to find the number of characters present in the string
 Eg:
 s = 'durga'
 print(len(s))  5
+
 input():
 ========
 input() function can be used to read data directly in our required format.
@@ -347,10 +348,670 @@ write a python program named add.py to read two inputs from keyboard and perform
 sum of two numbers.
 
 
+Identifier
+==========
+A Name in Python Program is called Identifier.
+It can be Class Name OR Function Name OR Module Name OR Variable Name.
+
+a = 10
+
+Rules to define Identifiers in Python:
+
+1. The only allowed characters in Python are
+  alphabet symbols(either lower case or upper case)
+
+ digits(0 to 9)
+ underscore symbol(_)
+
+ By mistake if we are using any other symbol like $ then we will get syntax error.
+ cash = 10 -->valid
+ ca$h =20 ->incalid
+
+ 2. Identifier should not starts with digit
+   123total ->invalid
+   total123 -> valid
+ 
+ 3. Identifiers are case sensitive. Of course Python language is case sensitive language.
+  
+   total=10
+   TOTAL=999
+   print(total) #10
+   print(TOTAL) #999
+
+
+
+Identifier:
+===========
+1) Alphabet Symbols (Either Upper case OR Lower case)
+2) If Identifier is start with Underscore (_) then it indicates it is private.
+3) Identifier should not start with Digits.
+4) Identifiers are case sensitive.
+5) We cannot use reserved words as identifiers
+ Eg: def = 10 
+6) There is no length limit for Python identifiers. But not recommended to use too 
+lengthy identifiers.
+7) Dollor ($) Symbol is not allowed in Python
+
+Which of the following are valid Python identifiers?
+1) 123total  ->invalid
+2) total123 ->valid
+3) java2share ->valid
+4) ca$h ->invalid
+5) _abc_abc_  ->valid
+6) def ->invalid
+7) if  ->invalid
+
+Note:
+1) If identifier starts with _ symbol then it indicates that it is private
+2) If identifier starts with __(Two Under Score Symbols) indicating that strongly private identifier.
+3) If the identifier starts and ends with two underscore symbols then the identifier is language defined special name, which is also known as magic methods
+Eg: __add__
+
+
+bytes Data Type:
+=================
+ bytes data type represens a group of byte numbers just like an array.
+
+x = [10,20,30,40] 
+b = bytes(x) 
+type(b)      #bytes 
+print(b[0])   # 10
+print(b[-1])   #40 
+
+for i in b : print(i) 
+
+ 
+Conclusion 1:
+The only allowed values for byte data type are 0 to 256. By mistake if we are trying to provide any other values then we will get value error.
+
+Conclusion 2:
+Once we creates bytes data type value, we cannot change its values,otherwise we will get TypeError
 
 
 
 
+bytearray Data Type:
+====================
+bytearray is exactly same as bytes data type except that its elements can be 
+modified.
+
+x = [10,20,30,40] 
+b = bytearray(x) 
+type(b)      #bytearray
+print(b[0])   # 10
+print(b[-1])   #40 
+
+for i in b : print(i) 
+
+b[0]=50
+
+print(b[0])
+
+
+Range Data Type:
+================
+range Data Type represents a sequence of numbers.
+The elements present in range Data type are not modifiable. 
+i.e range Data type is immutable.
+
+case1 : range(10)
+generate numbers from 0 to 9
+Eg:
+r = range(10)
+for i in r : print(i)
+
+case-2: range(10, 20)
+generate numbers from 10 to 19
+Eg:
+r = range(10,20)
+for i in r : print(i)
+
+
+case-3: range(10, 20, 2)
+2 means increment value
+Eg:
+r = range(10,20,2)
+for i in r : print(i)
+
+or
+
+for i in range(1,10,2):
+	print(i)
+
+
+We can access elements present in the range Data Type by using index.
+Eg:
+r = range(10,20)
+r[0] 
+r[15]  #IndexError: range object index out of range
+
+We cannot modify the values of range data type
+Eg:
+r[0] = 100
+TypeError: 'range' object does not support item assignment
+
+
+We can create a list of values with range data type
+
+Eg:
+
+l = list(range(10)) 
+print(l) 
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
 
+
+frozenset Data Type:
+====================
+It is exactly same as set except that it is immutable.
+Hence we cannot use add or remove functions.
+
+s=set({"apple","mango","kiwi"})
+type(s)
+
+fs = frozenset(s)
+print(type(fs))
+
+fs.add("orange")
+
+
+None Data Type:
+================
+None means nothing or No value associated.
+If the value is not available, then to handle such type of cases None introduced.
+It is something like null value in Java.
+
+Eg:
+def m1():
+ a=10
+print(m1())
+ None
+
+
+
+The following are various important escape characters in python
+
+1)\n  -> newline
+2)\t  -> horizontal tab
+3)\r   ->carriage return
+4)\b   -> backspace
+5)\f  -> formfeed
+6)\v   -> vertical tab
+7)\'  -> single quote
+8)\"  ->  double quote
+9) \\ ->  back slash symbol
+
+print("BlueYonde solutions")
+print("BlueYonde \n solutions")
+
+
+Operators:
+===========
+1) Arithmetic Operators:
+
++  -> addition
+-  ->substraction
+*  ->multiplication
+/  ->Divison
+%  ->Module
+
+**  ->exponent or power operator
+
+//  ->floor Division operator
+
+test.py:
+========
+a=10
+b=2
+print('a+b=',a+b) 
+print('a-b=',a-b)
+print('a*b=',a*b)
+print('a/b=',a/b)
+print('a//b=',a//b)
+print('a%b=',a%b)
+print('a**b=',a**b)
+
+case 2
+
+a=10.5
+b=2
+print('a+b=',a+b)
+print('a-b=',a-b)
+print('a*b=',a*b)
+print('a/b=',a/b)
+print('a//b=',a//b)
+print('a%b=',a%b)
+print('a**b=',a**b)
+
+Relational operator:
+=====================
+ > ->greater thab
+ >=  ->greater than equal to
+ <   -> less than
+ <=  -> less than equal to
+
+
+a=10
+b=2
+print(a>b)
+print(b>a)
+print(True > True) ->False
+print(True >= True) ->True
+print(False > True) -> False
+print(10> True) -> True
+
+Eqaulity Operators:
+====================
+== ->equal to
+!= ->not equal to
+
+print(10=20) -> invalid
+print(10==20)-> False
+print(10!=20)-> True
+
+Logical Operators:
+==================
+and
+or
+not
+
+Boolean types behaviour:
+========================
+and -> if both arguments are True then only result is True
+or  -> if atleast one argument is True the result is True
+not ->Complement
+
+x and y:
+===========
+
+if x is evaluated to false return x otherwise y
+Ex:
+
+10 and 20
+0 and 20
+
+if first argument is zero then the result is zero other result is y
+
+
+x or y:
+===========
+
+if x is evaluates to True then result is  x otherwise y
+Ex:
+
+10 or 20 ->10
+0 or 20 -> 20
+
+not x:
+======
+if x is evaluates to False then result is True otherwise False
+
+not 10 ->False
+not 0 ->True
+
+Assignment operators:
+====================
++=  
+-=
+*=
+/=
+%=
+**=
+&=
+|=
+
+Eg:
+---
+x=10
+x+=20    or x=x+20
+print(x) #30
+
+Eg2:
+====
+x=10
+x&=5
+print(x)  #0
+
+Ternary Operator or Conditional Operator:
+=========================================
+syntax:
+ x = firstValue if condition else secondValue
+
+if condition is true then firstvvalue
+if condition is false then second value
+
+Ex:
+--
+a,b=10,20
+x=30 if a<b else 40
+print(x)
+
+Ex2:
+===
+Read two number from the keyboard and print minimum value
+using ternary condition
+
+sol:
+
+a=int(input("Enter the first number")
+b=int(input("Enter the second number))
+m=a if a<b else b
+print("m value is :",m)
+
+
+Identity Opertors:
+==================
+We can use identity operators for address comparison
+There are 2 identity operators are available.
+1) is
+2) is not
+
+if r1 is r2 return True if both r1 and r2 pointing to the same object
+if r1 is not r2 return if both r1 and r2 are not pointing to the sameobejct
+
+Note:
+-----
+is will compare address 
+=== will compare content 
+Ex:
+====
+a=10
+b=10
+c=20
+
+print(id(a))
+print(id(b))
+print(id(c))
+print(a is b) #True
+print(a is not b) #False
+
+
+
+Membership operators:
+====================
+we can use membership operators to check whether the given object
+present in the given collection(list,set,tuple..).
+
+in ->Returns True if the given object present in the specified collection
+not in -> Returns True if the given object not present in the specified collection
+
+Ex:
+====
+x="hello learning python"
+
+print('h' in x) #True
+print('d' in x) #False
+print ('d' not in x) #True
+print('python in x) #True
+
+l1=["apple","banana","orange","kiwi"]
+print("apple in l1) #True
+print("grapes" not in l1) #True
+
+
+Mathematical Functions(math module)
+====================================
+A module is collection of functions,variables and classess etc.
+
+math module that contains several function to perform mathematical oerations.
+
+import math 
+
+Once we can import the we can call any functions of that module.
+
+import math
+print(math.sqrt(16))
+print(math.pi) 
+
+
+some functions of math:
+======================
+ceil(x)
+floor(x)
+pow(x,y)
+factorial(x)
+gcd(x,y)
+sqrt(x)
+pi
+
+
+Write a python program to find area of circle.
+===============================================
+import math
+r=16
+print("area of circle is ", math.pi*(r**2))
+
+
+
+eval()
+=======
+eval function take a string and evaluate the result.
+
+Ex:
+===
+x=eval("10+20+30")
+print(x) #60
+
+l1= eval(input("enter list"))
+print(type(l1))
+print(l1)
+
+command Line Arguments:
+======================
+
+argv is not array it is a list. it is available in sys module
+The arguments which are passing at the time of execution are called command line arguments
+
+Ex:-  py test1.py 20 30
+
+ex:
+----
+test2.py
+
+from sys import argv
+print("The number of command line arguments : ",len(argv))
+print("The list of command line arguments:",argv)
+print("command line arguments one by one:")
+for x in argv:
+  print(x)
+
+
+python test2.y 10 20 30
+
+
+Ex:
+===
+write a python program named add.py to read two inputs from keyboard and perform 
+sum of two numbers.
+
+
+Exercise:
+=========
+1)write  a program to check whether the given number is in 
+ between 1 and 100?
+
+
+
+
+Iterative statments:
+====================
+python supports 2 types of iterative statements.
+1)for loop
+2)while loop
+
+
+1) for loop:
+------------
+if we want to execute some actions for every element present in some
+sequence (it may be string or collection).
+
+syntax:
+--------
+ for in sequecne:
+	statements
+
+
+1)write a program to print hello 10times
+2)write a program to display 0 to 10
+3)write a program to display odd numbers from 0 to 20
+4) write a program to display numbers 10 to 1 in descending order
+5)write a program to sum of numbers present inside list
+
+  l1=eval(input("enter the list values"))
+  sum=0
+  for i in l1:
+      sum+=i
+  print(sum)
+
+
+while loop:
+===========
+if we want to execute a group of statements iteratively 
+until some condition false.
+
+syntax:
+ while condition :
+    body
+
+
+1)write a program to print 1 to 10
+2)write a program to sum of first n number.
+sol:
+----
+n = int(input("enter the n number"))
+sum=0  
+i=1
+
+while i<=n:
+   sum+=i
+   i+=1
+
+print("sum of first n number:",sum)
+
+
+break:
+======
+we can use break statement inside loop execution based on some condition.
+
+
+continue:
+============
+we can use continue statment to skip the current iterationand 
+continue the next iteration.
+
+ex1:
+----
+write a program to print 1 to 10  and skip the 5 iteration
+
+sol:
+
+for i in range(1,11):
+    if(i==5):
+        continue
+    else:
+         print(i)
+
+or
+
+while i<=10:
+      if i==5:
+        i+=1
+        continue
+    print(i)
+    i+=1
+
+loops with else block:
+======================
+inside loop execution,if break statement not executed,then only
+else part will be executed.
+
+else means without break.
+
+cart = [10,20,30,40,50]
+for item in cart:
+    if item>=50:
+      print("we cannot pass the order:")
+      break
+    print item
+else:
+    print("all items proccesed successfully")
+
+
+
+Exercise:
+=========
+Write a program to display *'s as Equivalent Triangle.
+
+
+What does end =’ do in Python?
+===============================
+The end parameter in the print function is used to add any string. At the end of the output of the print statement in python.
+
+By default, the print function ends with a newline.
+
+Passing the whitespace to the end parameter (end=‘ ‘) indicates that the end character has to be identified by whitespace and not a newline.
+
+For example:
+print(“hello”, end=’ ‘)
+
+print(“raju”)
+
+
+
+pass keyword:
+=============
+pass is a keyword in python
+in our programming syntactically if block is required
+which won't do anything then we can define that empty block with pass keyword.
+
+it an empty statement
+it is null statement
+it won't do anything
+
+
+Exercises:
+==========
+1)Program to reverse internal content of word.
+
+2)write a program to print characters at Oddposition and even position for the
+  given string.
+
+3) write a program to merge characters of 2 strings into a single by taking
+characters alternatively
+  input:
+       s1="ravi"
+       s2="teja"
+   Output: rtaevjia
+
+4)write a program to sort the characters of the string and print first Alphabet
+ symbol followed by numeric values.
+ input : B4A1D3
+ output : ABD134
+
+5)write a program to remove duplicate characters from the given string
+  Ex:ABCDABBCDABBBCCDDEEEF
+     output: ABCDEF           append(), separator.join()
+
+6)write a program to find the number of occurrence of each character present in
+  the given string.
+    input : ABBABCDDC
+    output : A-2,B-3,C-2,D-2
+
+7)write a program to display and count unique vowels present in the given word.
+  using list
+  Input: blueyondersoftwaresolutions
+    output: u e a i o =>5
+    
+    vl=['a','e','i','o','u']
+    word=input("enter the word")
+    found=[]
+    for i in word:
+	if i in v1:
+           if i not in found:
+               found.append(i)
+
+    print(found)
+    print(len(found))
+
+        
