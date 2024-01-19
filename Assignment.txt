@@ -23,3 +23,34 @@ Seconds: 20
 
 7. Write a program that prompts the user to enter number in two variables and swap the contents of the variables.(Do not declare extra variable.)
 
+List:
+=====
+1. Write a program that accepts a list from user and print the alternate element of list.
+
+2. Write a program that accepts a list from user. Your program should reverse the content of list and display it. Do not use reverse() method.
+
+3. Find and display the largest number of a list without using built-in function max(). Your program should ask the user to input values in list from keyboard. 
+
+4. Write a program that rotates the element of a list so that the element at the first index moves to the second index, the element in the second index moves to the third index, etc., and the element in the last index moves to the first index.
+
+5. Write a program that input a string and ask user to delete a given word from a string.
+
+6. Write a program that reads a string from the user containing a date in the form mm/dd/yyyy. It should print the date in the form March 12, 2021.
+
+
+Dictionary:
+===========
+1)Write a program that reads string from user. Your program should create a dictionary having key as word length and value is count of words of that length. For example, if user enters 'A fat cat is on the mat'.
+
+Word	Word length
+A	1
+fat	3
+cat	3
+is	2
+on	2
+the	3
+mat	3
+The content of dictionary should be {1:1, 3:4, 2:2}
+
+2)Write a program to read 6 numbers and create a dictionary having keys EVEN and ODD. Dictionary's value should be stored in list. Your dictionary should be like:
+{'EVEN':[8,10,64], 'ODD':[1,5,9]}
