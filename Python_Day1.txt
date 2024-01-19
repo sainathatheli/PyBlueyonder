@@ -1015,3 +1015,569 @@ characters alternatively
     print(len(found))
 
         
+Functions:
+==========
+We can create set of statements to perform the task.
+
+The main advantage of fucntions is reusaboility.
+
+Python Supports two types of functions:
+
+1) Built in functions
+   
+id()
+type()
+print()
+input()
+eval()
+..etc
+
+
+
+
+2) User Defined functions
+
+===========================
+
+The functions which are developed by programmer explicitly according to business 
+requriements.
+
+syntax:
+
+def functionNam(parameter):
+
+   # business logic   
+
+  return value
+
+
+1)write a function to print welcome message.
+
+
+2)write a  program to define function with one parameter to accept the value 
+  from end user
+
+def wish(u):
+   print("Welcome to python ",u)
+
+
+wish('sainath') #calling a function with parameter
+
+2) write a program to perform sum of two numbers using function.
+
+ def addition(a,b):
+      c=a+b;
+      print("sum of two numbers is ",c)
+
+3) write a progra  to perform sum of two numbers and return the sum value.
+
+
+
+4) write a program tp check whether the given number is even or
+   odd using function.
+   
+
+
+ def addition(a,b):
+      c=a+b;
+      print("sum of two numbers is ",c)
+
+
+addition(10,40) 
+
+Here: a , b ar formal parameters
+      10, 40 are actual parameters.
+
+
+There ar 4 types are actual arguments are allowed in python.
+1)Positional Arguments
+2)KeyWord Arguments
+3)Default Arugments
+4)Variable length Arguments
+
+
+1) Positional Arguments:
+=========================
+ These are the arguments passed to function in correct positional order.
+ 
+     def addition(a,b):
+      c=a+b;
+      print("sum of two numbers is ",c)
+
+     addition(10,40) #calling a function
+
+2)Keyword Arguments:
+====================
+  we can pass arguments values by keyword i.e by parameter name.
+
+      def wish(name,msg):
+          print("hello",name,msg)
+
+      wish(name="raju",,msg="hi")
+      wish(msg="good mrng",name="siddu")
+      wish("raju",msg="welcome to functions")# valid
+      wish(name="venkat","helloword") # not valid
+
+Note:
+-----
+position argument followed by keyword argrument is valid.
+
+3) Default Arguments:
+====================
+
+      def sayHello(name="guest"):
+          print("welcome to function ",name)
+
+
+     sayHello("veeru") 
+      sayHello()  
+
+4)Variable length Arguments:
+============================
+we can declare a variable  length arguments with * symbol as follows
+def f1(*n)
+
+we can call this function by passing any number of arguments including 
+zero number.
+
+Internally all these values represented in the form of tuple.
+
+synatx:
+=======
+        def functionName(*n):
+
+   
+     ex:
+        def sv(*n):
+           for i in n:
+               print(i)
+
+  sv(10,20)
+  sv(10,30,40,50,60)
+
+1) write a program to perform sum of 10 numbers using variable length argument.
+
+Ex2:
+    we can mix positional arguments and variable length arguments
+
+   
+    def f1(st,*n):
+          print(st)
+          for i in n:
+             print(i)
+
+
+Ex3:
+=====
+    def f2(*n,st):
+          print(st)
+          for i in n:
+             print(i)
+
+   f2(10,30,50,"hi")# invalid
+
+   f2(10,30,50,60,st="hi") #valid
+
+Note:
+-----
+if function contain first parameter variable length argument ,positional arguments
+by calling a function with functionname(variable arguments,keyword arguments).
+
+ex:  f2(10,30,50,60,st="hi") #valid
+
+
+Variables:
+==========
+Local variable :is defined inside the function whereas global variable is defined or declared outside of the function. A local variable is always created during the start of function execution. And is destroyed automatically when the function terminates.
+
+global variable: is created when execution starts and terminates when the program execution ends. A global variable is common for all program members but the scope of the local variable is limited to its own function only where it is defined.
+
+Ex:
+===
+a=10 #global variable
+
+def m1():
+    a=343 # local variable
+    print(a) 
+
+def m2():
+    print(a)
+
+
+lambda functions:
+=================
+we can define fucntion by using lamdba keyword
+
+syntax:
+=======
+lambda parameter1,parameter2..:expression/logic
+
+1)write a program to perform sum of two numbers
+
+s=lambda a,b:a+b
+print(type(s))
+print("sum of two numbers ",s(10,20))
+
+
+2) write a program to find biggest of given numbers using lambda fucntion.
+
+     gt = lambda a,b:a if a>b else b
+
+     print("greater number from 10,20 is ",gt(10,20))
+
+
+
+filter() function:
+===================
+we can use filter()function to filter values from the given sequence based on
+condition
+
+filter(function,sequence)
+
+Q) program to filter only even numbers from the list by using filter()?
+ 
+without lambda:
+===============
+def isEven(x):
+   if x%2==0:
+     return True
+   else
+     return False
+
+l1=[0,5,10,15,20,25,30]
+li=list(filter(isEven,l1)
+print(li)
+
+with lambda:
+============
+l1=[0,5,10,15,20,25,30]
+li=list(filter(lambda x:x%2==0,l1))
+print(li)
+
+
+
+map():
+=======
+for every element present in the sequence,add some functionalities and 
+generate new element based on required format.
+
+map(function,sequence)
+
+ex:
+===
+every element in the list convert into double
+
+without lambda:
+==================
+def dl(x):
+    return x*x
+
+l1=[4,5,7,8,3]
+l2=list(map(dl,l1))
+print(l2)
+
+with lambda:
+==============
+l1=[4,5,7,8,3]
+l2=list(map(lambda x:x*x,l1)
+print(l2)
+
+
+Exercises:
+==========
+1)Define a function which counts vowels and consonant in a word.
+
+2)Define a function that accepts lowercase words and returns uppercase words.
+
+3)Write a function that inputs a number and prints the multiplication table of that number
+
+4)Write a program to print twin primes less than 1000. 
+ If two consecutive odd numbers are both prime then they are known as twin primes
+
+5)Write a program to find out the prime factors of a number. 
+ Example: prime factors of 56 is  2, 7
+
+6)Write a function that converts a decimal number to binary number
+
+Base Conversions
+----------------
+bin()     
+oct()
+hex()
+    
+
+Modules:
+==========
+A group of functions,variables and classes saved to a file.
+Every python file(.py) act as a module
+
+if we want to use members of module in programs then we should import that module.
+ex: import modulename
+
+we can access members by using modulename
+modulename.variable
+modulename.function()
+
+Ex:
+===
+create a python file which contains three functions and one variable
+
+testModule.py
+------------
+x="hi"
+
+def f1():
+	print("we are in f1 function")
+
+def addition(a,b):
+	print("sum of two numbers",(a+b))
+
+def sayHell(msg):
+	print("hello ",msg)
+
+
+test.py
+=======
+import testModule
+
+testModule.f1()
+testModule.addition(10,20)
+testModule.sayHello("how are you")
+print(testModule.x)
+
+or
+
+using aliasing
+--------------
+import testModule as tm
+
+tm.f1()
+tm.addition(10,20)
+tm.sayHello("how are you")
+print(tm.x)
+
+or
+form..import
+------------
+from testModule import *
+
+f1()
+addition(10,20)
+sayHello("how are you")
+print(x)
+
+or
+
+form..import using specific function
+-------------------------------------
+from testMoudule import addition
+
+addition(30,40)
+
+or 
+
+form..import using specific function using alias
+------------------------------------------------
+from testMoudule import addition as a
+
+a(30,40)
+
+
+
+Finding Members of module by using dir()function:
+====================================================
+dir() --> to list out all members of current module.
+dir(modulename) -> to list out all members of specified module.
+
+
+Note:
+=====
+for every module at the time of execution python interpreter will add some special
+properties automatically for internal use.
+ex:
+print(dir(testModule))
+['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'addition', 'f1', 'sayHell', 'x']
+
+
+The special variable __name__
+---------------------------------
+For every python program, a special varibale __name__ will be added internally.
+
+This variable stores information regarding whether the program is executed as an
+individual program or as a module.
+
+if the program executed as an individual program then the value of this variable is 
+__main__
+
+if the program executed as a module from some other program then the value of this
+variable is the name of module where it is defined.
+
+Hence by using this __name__ variable we can identify whether the program executed
+directly or as a module.
+
+Ex:
+---
+test1.py
+
+def f1():
+  	if __name__='__main__':
+		print("program executed from the same modeule test.py")
+	else:	
+		print("program executed from the other module test.py")
+
+
+
+packages
+=========
+It is mechanism to group related modules into a single unit.
+
+package is a folder or directory which represents collection of python modules.
+
+Any folder or directory contains __init__.py file, is considered as a python package.This file can be empty.
+
+A package can contain sub packages also.
+
+The main advantages of packages statement are:
+1)we can resolve naming conflicts
+2)we can identify our components uniquely
+3)it improves modularity of the application
+
+Ex:
+---
+create one directory named as come, in that directory creat testModule.py.
+packages
+  |
+  |
+  |____come  -folder
+  |
+  |____test.py (outside com folder)
+  	|
+	|___testModule.py (inside com folder)
+        |___ __init__.py (empty file)
+
+
+testModule.py
+------------
+x="hi"
+
+def f1():
+	print("we are in f1 function")
+
+def addition(a,b):
+	print("sum of two numbers",(a+b))
+
+def sayHell(msg):
+	print("hello ",msg)
+
+
+test.py:
+========
+import com.testModule
+
+com.testModule.f1()
+com.testModule.addition(10,20)
+com.testModule.sayHello("how are you")
+print(com.testModule.x)
+
+
+or
+
+using alias name
+=================
+import com.testModule as ct
+
+ct.f1()
+ct.addition(10,20)
+ct.sayHello("how are you")
+print(ct.x)
+
+
+or
+from.. import -->specific members
+
+from com.testModule import addition as a,f1
+f1()
+a(10,30)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
