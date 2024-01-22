@@ -1712,36 +1712,54 @@ Syntax:
  def __init__(self,arg):
  self.msg=arg
 
+Examples:
+----------
+1)#We can define customexception class inherits from the Exceptions class
+class InvalidAgeException(Exception):
+    def __init__(self,st):
+        self.msg=st
+
+try:
+    age=int(input("Enter the age : "))
+    if age < 18 :
+        raise InvalidAgeException("Age should be  greater or equal to 18 then only cast a vote")
+    else:
+        print("Valid Age You can Cast your vote :")
+
+except InvalidAgeException as msg:
+    print(msg)
+
+
+
+
+2)#We can define customexception class inherits from the Exceptions class
+
+class InvalidAgeException(Exception):
+    pass
+
+try:
+    age=int(input("Enter the age : "))
+    if age < 18 :
+        raise InvalidAgeException
+    else:
+        print("Valid Age You can Cast your vote :")
+
+except InvalidAgeException:
+    print("Age should be greater than or equal to 18 to cast a vote")
+
+
+
+
+
+
+
+
 
 Exercises:
 ===========
 Write a Python program that opens a file and handles a FileNotFoundError exception if the file does not exist.
 
 Write a Python program that prompts the user to input two numbers and raises a TypeError exception if the inputs are not numerical.
-
-
-Exercises on Files
-===================
-1)Write a program that writes 10 random numbers to a file 'numbers.txt'. Each random number should be in the range of 1 through 100(hint use random module-->randominit())
-
-2)Write a program that reads and display all of the numbers stored in the file numbers.txt (created in      question 1) and calculates their total.
-
-3)Write a function, digit_count() in Python that counts and displays the number of digits in the text file named 'sample.txt'. 
-For example, if the content of 'sample.txt' is as follows :
-The team achieved a milestone in 2023. They completed a multi-million-dollar project ahead of schedule. Stakeholders were impressed with a 98% success rate.
-
-The function should display the output as 6
-
-4)Write a function lines_count() that reads lines from a text file named 'zen.txt' and displays the lines that begin with any vowel. Assume the file contains the following text and already exists on the computer's disk:
-
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-
-The lines_count() function should display the output as:
-Explicit is better than implicit.
-
 
 File Handling:
 ================
@@ -1847,18 +1865,64 @@ Write a program to check whether the given files exists or not. If it is exist t
 write a program to print number of lines,words and characters present in the given file (simple.txt).
 
 
+
+The seek() and tell() functions:
+
 tell():
 =======
-it will tell us the current position(file pointer).
-current position by default is 0 (file starts at first)
+We can use tell() method to return current position of the cursor(file pointer) from 
+beginning of the file. [ can you plese telll current cursor position]
+
+The position(index) of first character in files is zero just like string index.
+1) f=open("abc.txt","r") 
+2) print(f.tell()) 
+3) print(f.read(2)) 
+4) print(f.tell()) 
+5) print(f.read(3))
+
+6) print(f.tell()) 
+abc.txt:
+sunny
+bunny
+chinny
+vinny
+
+Output:
+0
+su
+2
+nny
+5
+
 
 seek():
 ========
-it will tell us to moving cursor pointer(file position)
+We can use seek() method to move cursor (file pointer) to specified location.
+[Can you please seek the cursor to a particular location]
+f.seek(offset, fromwhere)  offset represents the number of positions
+
+The allowed Values for 2
+nd Attribute (from where) are
+
+0  From beginning of File (Default Value)
+1  From Current Position
+2  From end of the File
 
 ex:
-----
-seeK(17) --it will place the cursor at 17th position
+====
+data="All Students are good" 
+f=open("abc.txt","w") 
+f.write(data) 
+with open("abc.txt","r+") as f: 
+text=f.read() 
+print(text) 
+print("The Current Cursor Position: ",f.tell()) 
+f.seek(17) 
+print("The Current Cursor Position: ",f.tell()) 
+f.write("GEMS!!!") 
+f.seek(0) 
+text=f.read()
+
 
 
 Exercises:
