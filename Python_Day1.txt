@@ -1499,6 +1499,409 @@ from com.testModule import addition as a,f1
 f1()
 a(10,30)
 
+Exception handling:
+===================
+
+In any programming language there are 2 types of errors are possible.
+1) Syntax Errors
+2) Runtime Errors
+
+
+1)Syntax Errors:
+ The errors which occur because of invalid syntax are called syntax errors.
+Eg 1:
+x = 10
+if x == 10
+ print "Hello"
+SyntaxError: invalid syntax
+Eg 2:
+print "Hello"
+SyntaxError: Missing parentheses in call to 'print'
+
+Note: Programmer is responsible to correct these syntax errors. Once all syntax errors are corrected then only program execution will be started.
+
+2)Runtime Errors:
+Also known as exceptions.
+While executing the program if something goes wrong because of end user input or 
+programming logic or memory problems etc then we will get Runtime Errors.
+
+Eg:
+1) print(10/0)  ZeroDivisionError: division by zero
+2) print(10/"ten")  TypeError: unsupported operand type(s) for /: 'int' and 'str'
+3) x = int(input("Enter Number:"))
+print(x)
+
+D:\Python_classes>py test.py
+Enter Number:ten
+ValueError: invalid literal for int() with base 10: 'ten'
+
+Note: Exception Handling concept applicable for Runtime Errors but not for syntax error
+
+
+What is Exception?
+An unwanted and unexpected event that disturbs normal flow of program is called 
+exception.
+Eg:
+ZeroDivisionError
+TypeError
+ValueError
+FileNotFoundError
+..etc
+
+It is highly recommended to handle exceptions. The main objective of exception handling is Graceful Termination of the program (i.e we should not block our resources and we should not miss anything)
+We have to define alternative way to continue rest of the program normally.
+
+Eg: For example our programming requirement is reading data from remote file locating 
+at London. At runtime if London file is not available then the program should not be 
+terminated abnormally. We have to provide local file to continue rest of the program 
+normally. This way of defining alternative is nothing but exception handling.
+
+try:
+Read Data from Remote File locating at London.
+except FileNotFoundError:
+use local file and continue rest of the program normally
+
+
+
+Every Exception in Python is a class. 
+
+All exception classes are child classes of BaseException.i.e every exception class 
+extends BaseException either directly or indirectly. Hence BaseException acts as root 
+for Python Exception Hierarchy.
+
+Most of the times being a programmer we have to concentrate Exception and its child 
+classes.
+
+
+Exception Handling by using try-except:
+========================================
+It is highly recommended to handle exceptions.
+
+The code which may raise exception is called error code and we have to take error code inside try block. The corresponding handling code we have to take inside except block.
+
+try:
+ error Code
+except XXX:
+ Handling code/Alternative Cod
+
+
+
+Without try-except:
+====================
+print("stmt-1") 
+print(10/0) 
+print("stmt-3") 
+
+Output
+=======
+stmt-1 
+ZeroDivisionError: division by zero 
+Abnormal termination/Non-Graceful Termination
+
+With try-except:
+----------------
+print("stmt-1") 
+try: 
+print(10/0) 
+
+except ZeroDivisionError: 
+print(10/2) 
+print("stmt-3") 
+
+output:
+-----
+stmt-1 
+5.0 
+stmt-3 
+Normal termination/Graceful Termination
+
+
+
+Single except Block that can handle Multiple Exceptions:
+========================================================
+We can write a single except block that can handle multiple different types of exceptions.
+except (Exception1,Exception2,exception3,..): OR
+except (Exception1,Exception2,exception3,..) as msg :
+
+
+Default except Block:
+=====================
+We can use default except block to handle any type of exceptions.
+In default except block generally we can print normal error messages.
+
+Syntax: 
+ except:
+ statements
+
+
+finally Block:
+===============
+It is not recommended to maintain clean up code(Resource Deallocating Code or 
+Resource Releasing code) inside try block because there is no guarentee for the 
+execution of every statement inside try block always.
+ 
+It is not recommended to maintain clean up code inside except block, because if there 
+is no exception then except block won't be executed.
+
+Hence we required some place to maintain clean up code which should be executed 
+always irrespective of whether exception raised or not raised and whether exception 
+handled or not handled. Such type of best place is nothing but finally block.
+ 
+Hence the main purpose of finally block is to maintain clean up code.
+try:
+ Risky Code
+except: 
+ Handling Code
+finally:
+ Cleanup code
+
+The speciality of finally block is it will be executed always whether exception raised or not raised and whether exception handled or not handled
+
+
+else Block with try-except-finally:
+=======================================
+We can use else block with try-except-finally blocks.
+else block will be executed if and only if there are no exceptions inside try block.
+
+try:
+Risky Code
+except:
+will be executed if exception inside try
+else:
+will be executed if there is no exception inside try
+finally:
+will be executed whether exception raised or not raised and handled or not 
+handled
+
+
+
+
+1)Predefined Exceptions:
+
+Also known as inbuilt exceptions.
+The exceptions which are raised automatically by Python virtual machine whenver a 
+particular event occurs are called pre defined exceptions.
+
+Eg 1: Whenever we are trying to perform Division by zero, automatically Python will 
+raise ZeroDivisionError.
+print(10/0)
+
+
+Eg 2: Whenever we are trying to convert input value to int type and if input value is 
+not int value then Python will raise ValueError automatically
+x=int("ten")  ValueError
+
+
+
+User Defined Exceptions:
+=========================
+Also known as Customized Exceptions or Programatic Exceptions
+Some time we have to define and raise exceptions explicitly to indicate that something goes wrong, such type of exceptions are called User Defined Exceptions or Customized 
+Exceptions
+
+Programmer is responsible to define these exceptions and Python not having any idea 
+about these. Hence we have to raise explicitly based on our requirement by using 
+"raise" keyword
+
+How to Define and Raise Customized Exceptions:
+===============================================
+Every exception in Python is a class that extends Exception class either directly or 
+indirectly.
+Syntax:
+ class classname(predefined exception class name):
+ def __init__(self,arg):
+ self.msg=arg
+
+
+Exercises:
+===========
+Write a Python program that opens a file and handles a FileNotFoundError exception if the file does not exist.
+
+Write a Python program that prompts the user to input two numbers and raises a TypeError exception if the inputs are not numerical.
+
+
+Exercises on Files
+===================
+1)Write a program that writes 10 random numbers to a file 'numbers.txt'. Each random number should be in the range of 1 through 100(hint use random module-->randominit())
+
+2)Write a program that reads and display all of the numbers stored in the file numbers.txt (created in      question 1) and calculates their total.
+
+3)Write a function, digit_count() in Python that counts and displays the number of digits in the text file named 'sample.txt'. 
+For example, if the content of 'sample.txt' is as follows :
+The team achieved a milestone in 2023. They completed a multi-million-dollar project ahead of schedule. Stakeholders were impressed with a 98% success rate.
+
+The function should display the output as 6
+
+4)Write a function lines_count() that reads lines from a text file named 'zen.txt' and displays the lines that begin with any vowel. Assume the file contains the following text and already exists on the computer's disk:
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+
+The lines_count() function should display the output as:
+Explicit is better than implicit.
+
+
+File Handling:
+================
+
+As the part of programming requirement, we have to store our data permanently for 
+future purpose. For this requirement we should go for files.
+
+Files are very common permanent storage areas to store our data
+
+Types of Files:
+
+There are 2 types of files
+
+1) Text Files:
+ Usually we can use text files to store character data
+ Eg: abc.txt
+
+2) Binary Files:
+Usually we can use binary files to store binary data like images,video files, audio files etc...
+
+Opening a File:
+
+Before performing any operation (like read or write) on the file,first we have to open that file.
+For this we should use Python's inbuilt function open()
+
+But at the time of open, we have to specify mode,which represents the purpose of 
+opening file.
+
+f = open(filename, mode)
+
+The allowed modes in Python are
+
+1) r  open an existing file for read operation. The file pointer is positioned at the beginning of the file.If the specified file does not exist then we will get FileNotFoundError.This is default mode.
+
+2) w  open an existing file for write operation. If the file already contains some data then it will be overridden. If the specified file is not already avaialble then this mode will create that file.
+
+3) a  open an existing file for append operation. It won't override existing data.If the specified file is not already avaialble then this mode will create a new file.
+
+4) r+  To read and write data into the file. The previous data in the file will not be deleted.The file pointer is placed at the beginning of the file.
+
+5) w+  To write and read data. It will override existing data.
+
+6) a+  To append and read data from the file.It wont override existing data.
+
+7) x  To open a file in exclusive creation mode for write operation. If the file already exists then we will get FileExistsError.
+
+Note:
+=====
+All the above modes are applicable for text files. If the above modes suffixed with 'b' then these represents for binary files.
+Eg: rb,wb,ab,r+b,w+b,a+b,xb
+
+
+f = open("abc.txt","w")
+
+We are opening abc.txt file for writing data.
+
+Closing a File:
+================
+
+After completing our operations on the file, it is highly recommended to close the file. For this we have to use close() function.
+
+f.close()
+
+Various Properties of File Object:
+==================================
+Once we opend a file and we got file object, we can get various details related to that file by using its properties.
+
+name  Name of opened file
+
+mode  Mode in which the file is opened
+
+closed  Returns boolean value indicates that file is closed or not
+
+readable() Returns boolean value indicates that whether file is readable or not
+
+writable() Returns boolean value indicates that whether file is writable or not.
+
+f=open("abc.txt",'w') 
+print("File Name: ",f.name) 
+print("File Mode: ",f.mode) 
+print("Is File Readable: ",f.readable()) 
+print("Is File Writable: ",f.writable()) 
+print("Is File Closed : ",f.closed) 
+
+f.close() 
+
+print("Is File Closed : ",f.closed)
+
+
+
+
+Writing Data to Text Files:
+===========================
+We can write character data to the text files by using the following 2 methods.
+1) write(str)
+2) writelines(list of lines)
+
+
+Exercises:
+==========
+
+Write a program to check whether the given files exists or not. If it is exist then print its content.
+write a program to print number of lines,words and characters present in the given file (simple.txt).
+
+
+tell():
+=======
+it will tell us the current position(file pointer).
+current position by default is 0 (file starts at first)
+
+seek():
+========
+it will tell us to moving cursor pointer(file position)
+
+ex:
+----
+seeK(17) --it will place the cursor at 17th position
+
+
+Exercises:
+==========
+1. Write a function in python to read the content from a text file "poem.txt" line by line and display the same on screen
+
+2.Write a function in python to count the number of lines from a text file "story.txt" which is not starting with an alphabet "T". 
+
+Example: If the file "story.txt" contains the following lines: 
+A boy is playing there.
+There is a playground.
+An aeroplane is in the sky.
+The sky is pink.
+Alphabets and numbers are allowed in the password.
+
+The function should display the output as 3
+
+3)Write a function in Python to read lines from a text file "notes.txt". Your function should find and display the occurrence of the word "the".
+For example: If the content of the file is:
+"India is the fastest-growing economy. India is looking for more investments around the globe. The whole world is looking at India as a great market. Most of the Indians can foresee the heights that India is capable of reaching."
+
+The output should be 5
+
+4)Write a function display_words() in python to read lines from a text file "story.txt", and display those words, which are less than 4 characters
+
+
+5)Write a function last_digit_words() in Python to count the words ending with a digit in a text file "notes.txt". 
+
+For example, if the file content is as follows :
+The Computer6 hums softly as I sit with a Book3 in hand, diving into a world of imagination. Outside, my friends gather at House9 and I quickly grab my Pen2 to jot down the address.
+
+The expected output should be:
+Number of words ending with a digit are 4  
+
+
+
+
+
+
+
+
+
+
 
 
 
