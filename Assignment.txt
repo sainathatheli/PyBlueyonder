@@ -101,6 +101,132 @@ The lines_count() function should display the output as:
 Explicit is better than implicit.
 
 
+Exercises On Inheritance:
+=========================
+1. Write a program to create a class by name Students, and initialize attributes like name, age, and grade while creating an object.
+Solution: To create a class in Python, we use the class keyword, and to initialize the attribute during object creation, we define the __init__() method.
+
+2. Write a Program to create a valid empty class with the name Students, with no properties.
+
+3.Write a program to create a child class Teacher(name, age) that will inherit the properties from the parent class Staff(role, dept, salary) and display the staff details using show_details()
+
+output:
+Name:  Raj
+Age:  28
+Role: Teacher
+Department: Science
+
+
+
+5-a: New Class Which Inherits
+
+A new class named F14 is initated for you which inherits from the parent class Jets.
+
+Instead of taking parameters other than self such as name and country, initiate the new class so that name is always fixed to "F14" and origin is always fixed to "USA"
+
+Make sure the new class has its own initation method (constructor or __init__) which takes only one parameter:self and overrides name and origin attributes as those don't change for an F14 fighter jet.
+
+HINT 1
+Note that new class inherits the parent class by having it inside its parenthesis as following:
+
+class F14(Jets):
+
+HINT 2
+
+Inside the new class you can start defining it with the initiator method __init__
+class F14(Jets):
+    def __init__(self):
+
+solution:
+---------
+class Jets:
+
+    def __init__(self, name, country):
+        self.type = "Jet"
+        self.area = "Air"
+        self.name = name
+        self.origin = country
+                
+#Type your code below inside the new class
+
+class F14(Jets):
+
+    def __init__(self)
+        
+
+
+
+a=F14() 
+print(a.origin)
+print(a.name)
+
+
+5-b: __init__ Constructor and New Attributes
+
+A new class named F14 is initated for you which inherits from the parent class Jets.
+
+Under this new class, define 4 methods regarding engine, seat, tail and speed.
+
+Make sure the new class has its own initation method (constructor or __init__) ehich takes only one parameter:self and overrides name and origin attributes to "F14" and "USA" always as those don't change for an F14 fighter jet.
+
+Also add 3 more attributes:
+engine, seat, tail which are all 2 by default.
+
+HINT 1
+Again you need to start with inheriting the parent class as following and then start constructing its own attributes.
+class F14(Jets):
+
+HINT 2
+Second step will be the initiation method:
+
+class F14(Jets):
+
+    def __init__(self):  
+      
+After that you can continue defining your attributes inside the method.
+
+HINT 3
+Once attributions are defined correctly you’ll need to create an instance of F16 and assign it to the variable a as a final step.
+
+a=F16()
+
+
+solution:
+=========
+class Jets:
+    model = None
+    country = 0
+
+    def __init__(self, name, country):
+        self.type = "Jet"
+        self.area = "Air"
+        self.name = name
+        self.origin = country
+        
+               
+#Type your code here
+
+class F14(Jets):
+
+
+
+2)
+a)Create a child class Bus that will inherit all of the variables and methods of the Vehicle class
+
+Given code:
+
+class Vehicle:
+
+    def __init__(self, name, max_speed, mileage):
+        self.name = name
+        self.max_speed = max_speed
+        self.mileage = mileagege=mileage
+
+b)Create a Bus object that will inherit all of the variables and methods of the parent Vehicle class and display it.
+
+Expected Output:
+
+Vehicle Name: School Volvo Speed: 180 Mileage: 12
 
 
 
