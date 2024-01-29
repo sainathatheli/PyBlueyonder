@@ -898,6 +898,1510 @@ papaya -100
 Guava -200
 Total Quantity:300
 
+Inheritance(is-a) :
+===================
+The process of inheriting the properties of the parent class into a child class is called inheritance. The existing class is called a base class or parent class and the new class is called a subclass or child class or derived class.
+
+The main purpose of inheritance is the reusability of code because we can use the existing class to create a new class instead of creating it from scratch.
+
+In inheritance, the child class acquires all the data members, properties, and functions from the parent class. Also, a child class can also provide its specific implementation to the methods of the parent class.
+
+Inheritance is also called as a is-a relation
+
+For example, In the real world, Car is a sub-class of a Vehicle class. We can create a Car by inheriting the properties of a Vehicle such as Wheels, Colors, Fuel tank, engine, and add extra properties in Car as required.
+
+The type of inheritance are listed below:
+
+Single inheritance:
+-------------------
+In single inheritance, a child class inherits from a single-parent class. Here is one child class and one parent class.
+
+class Parent:
+        name="bluey"
+	def m1(self):
+		print("Inside the parent class")
+
+class Child(Parent):
+	def m2(self):
+		print("Inside the child Class")
+
+
+
+c=Child()
+c.m2()  #calling child class function
+c.m1() #calling Parent class function
+print(c.name)
+
+
+
+
+Multiple Inheritance
+--------------------:
+In multiple inheritance, one child class can inherit from multiple parent classes. So here is one child class and multiple parent classes.
+
+Ex: Person is  a class
+    Company is a class
+    Employee is a child class of Person,Company.
+
+
+class Person:
+	def per_info(self,name,age):		
+		print("person information: ",name,age)
+
+	def display():
+		print("Inside the Person class")
+
+class Company:
+	def comp_info(self,company,loc):
+		print("company info: ",company,loc)
+
+	def display():
+		print("Inside the Company class")
+
+class Employee(Person,Company):
+	def emp_info(self,salary,addrs):
+		print("Employee info:",salary,addrs)
+
+
+eobj = Employee()
+eobj.per_info("martin",36)
+eobj.comp_info("bluey","hyd")
+eobj.emp_info(10000,"Mumbai")
+eobj.display()
+
+Note:
+====
+if the same method is inherited from the both parent classes,then python will
+always consider the order of parent class in the declaration of the child class.
+
+class Employee(Person,Company) --> display() from Person is considered.
+class Employee(Company,Person) --> display() from Company is considerd.
+
+
+
+Multilevel inheritance
+-----------------------
+In multilevel inheritance, a class inherits from a child class or derived class. Suppose three classes A, B, C. A is the superclass, B is the child class of A, C is the child class of B. In other words, we can say a chain of classes is called multilevel inheritance.
+
+Ex:
+---
+class Vehicle:
+	def veh_info(self):
+		print("inside vechicle class)
+
+class Car(Vehicle):
+	def car_info(self):
+		print("Inside Car class")
+
+class SportsCar(Car):
+	def sprt_info(self):
+		print("Inside the Sports Cars")
+
+
+sc=SportsCar()
+sc.sprt_info()
+sc.car_info()
+sc.veh_info()
+
+Hierarchical Inheritance:
+-------------------------
+In Hierarchical inheritance, more than one child class is derived from a single parent class. In other words, we can say one parent class and multiple child classes.
+
+
+ex: let see Vehicle is parent class, Car and Trunck are the child classes of Vehicle
+
+
+class Vehicle:
+	def veh_info(self):
+		print("inside vechicle class)
+
+class Car(Vehicle):
+	def car_info(self,name):
+		print("The car name is : ",name)
+
+class Truck(Vehicle):
+	def truck_info(self,name):
+		print("The truck name is : " name)
+
+
+c=Car()
+c.car_info("Ford")
+c.veh_info()
+
+t=Truck()
+t.truck_info("Mahendra")
+t.veh_info()
+
+
+
+Hybrid Inheritance
+-------------------
+When inheritance is consists of multiple types or a combination of different inheritance is called hybrid inheritance.
+
+Ex:
+====
+
+class Vehicle:
+	def veh_info(self):
+		print("inside vechicle class)
+
+class Car(Vehicle):
+	def car_info(self,name):
+		print("The car name is : ",name)
+
+class Truck(Vehicle):
+	def truck_info(self,name):
+		print("The truck name is : " name)
+
+
+class SportsCar(Car,Vehicle):     #multiple inheritance
+	def sprt_info(self,name):
+		print("The Sports Car name is : ",name)
+
+
+c=Car()
+c.car_info("Ford")
+c.veh_info()
+
+t=Truck()
+t.truck_info("Mahendra")
+t.veh_info()
+
+sc=SportsCar()
+sc.sprt_info("ferari")
+sc.car_info("BMW")
+sc.veh_info()
+
+
+super():
+-------
+super() is a built-in method which is useful to call the super class constructors,variables 
+and functions from the child class.
+
+Ex:
+====
+
+class Person:
+	def __init__(self):
+		print("Constructor inside Person class")
+
+	def per_info(self,name,age):
+		print("The person info: ",name,age)
+
+class Employee(Person):
+	def __init__(self):
+		super().__init__() #calling constructor of parent class
+		print("Constructor inside Employee class")
+
+	def emp_info(self,salary,loc)
+		super().per_info("marin",45)
+		print("employee info ",salary,loc)
+
+e=Employee()
+
+e.emp_info(4000,"boston")
+
+
+By Composition (Has-A Relationship):
+=====================================
+By using Class Name or by creating object we can access members of one class inside 
+another class is nothing but composition (Has-A Relationship).
+
+The main advantage of Has-A Relationship is Code Reusability.
+
+
+class Car:
+	def __init__(self,name,model):
+		self.name=name
+		self.model=model
+	def getInfo(self):
+		print("Car name is {} and model is {}".format(self.name,self.model))
+
+class Employee:
+	def __init__(self,eno,ename,loc,car):
+		self.eno=eno
+		self.ename=ename
+		self.loc=loc
+		self.car=car
+        def getEmpInfo(self):
+                print("employee No: {} ,EmpName is : {} ,locaion is : 					 		{}".format(self.eno,self.ename,self.loc))
+                
+                 c=self.car
+                 c.getInfo(self)
+
+cobj = Car("Maruti",2020)
+eobj = Employee(1001,"smith","hyd",cobj)
+
+eobj.getEmpInfo()
+
+
+IS-A vs HAS-A Relationship:
+===========================
+If we want to inherit existing functionality with some more extra functionality then we 
+should go for IS-A Relationship.
+
+If we dont want to inherit and just we have to use existing functionality then we 
+should go for HAS-A Relationship.
+
+Eg: Employee class inherits Person class Functionality But Employee class just uses Car 
+functionality but not inheriting         
+
+	Person(name,age)
+	|
+	|is-a
+	|
+	Employee(salary,addrs)  ----- Has-a ----- Car(name,model,color)
+
+
+class Person:
+	def __init__(self,name,age):
+		self.name=name
+		self.age=age
+        def getPerInfo(self):
+		print("Name is : {}, age is : {}".format(self.name,self.age))
+
+class Car:
+	def __init__(self,name,model,color):
+		self.name=name
+                self.model=model
+		self.color=color
+
+	def getCarInfo(self):
+		print("Car Name is :{ },Model : { },Color : {}".format(self.name,self.model,self.color))
+
+class Employee(Person):
+	def __init__(self,name,age,salary,addrs,car):
+		super().__init(name,age)
+ 		self.salary=salary
+	        self.addrs=addrs
+		self.car=car
+        
+	def getEmpDetails(self):
+            super().getPerInfo()
+            print("EmpSalary is  {},address is {} ".format(self.salary,self.addrs))
+            self.car.getCarInfo()
+
+c=Car("Maruti",2020,"grey")
+eobj = Employee("smith",46,4000,"boston",c)
+
+eobj.getEmpDetails()
+	     
+                 
+          
+Examples on super:
+==================
+class P: 
+	a=10 
+	def __init__(self): 
+		self.b=10 
+	def m1(self): 
+		print('Parent instance method') 
+	@classmethod 
+	def m2(cls): 
+		print('Parent class method') 
+
+	@staticmethod 
+	def m3(): 
+	print('Parent static method') 
+ 
+class C(P): 
+	a=888 
+	def __init__(self): 
+		self.b=999 
+		super().__init__()
+		print(super().a) 
+		super().m1() 
+		super().m2() 
+		super().m3() 
+
+c=C() 
+
+Output:
+10
+Parent instance method
+Parent class method
+Parent static method
+
+In the above example we are using super() to call various members of Parent class.
+
+
+How to Call Method of a Particular Super Class:
+===============================================
+We can use the following approaches
+
+1) super(D, self).m1()
+ It will call m1() method of super class of D.
+
+ note: the super class of specified class will be called, class C is called. The mentioned class is D and its super class is C.
+
+2) A.m1(self)
+ It will call A class m1() method
+
+Ex:
+===
+class A: 
+	def m1(self): 
+		print('A class Method') 
+
+class B(A): 
+	def m2(self): 
+		print('B class Method') 
+
+class C(B): 
+	def m3(self): 
+		print('C class Method') 
+
+
+class D(C): 
+	def m4(self): 
+		print('D class Method') 
+
+class E(D): 
+	def m5(self): 
+		A.m1(self) 
+		super(D,self).m3() 
+        	
+e=E() 
+e.m5()
+
+
+
+
+Important Points about super():
+=========================================
+Case-1: From child class we are not allowed to access parent class instance variables by 
+using super(), Compulsory we should use self only.
+
+But we can access parent class static variables by using super()
+
+class P: 
+	a=10 
+	def __init__(self): 
+		self.b=20
+
+class C(P): 
+	def m1(self): 
+		print(super().a)#valid 
+		print(self.b)#valid 
+		print(super().b)#invalid 
+
+c=C() 
+c.m1()
+
+Output:
+=======
+10
+20
+AttributeError: 'super' object has no attribute 'b'
+
+Case-2: From child class constructor and instance method, we can access parent class 
+instance method, static method and class method by using super()
+
+Ex:
+===
+class P: 
+	def __init__(self): 
+		print('Parent Constructor') 
+	def m1(self): 
+		print('Parent instance method')
+	@classmethod 
+	def m2(cls): 
+		print('Parent class method')
+
+	@staticmethod 
+	def m3(): 
+		print('Parent static method')
+
+class C(P): 
+	def __init__(self): 
+		super().__init__() 
+		super().m1() 
+		super().m2() 
+		super().m3()
+	
+	def m4(self): 
+		super().__init__() 
+		super().m1() 
+		super().m2() 
+		super().m3()
+
+c=C() 
+c.m4() 
+
+
+Case-3: From child class, class method we cannot access parent class instance methods 
+and constructors by using super() . But we can access 
+parent class static and class methods
+
+Ex:
+----
+class P: 
+	def __init__(self): 
+		print('Parent Constructor') 
+
+	def m1(self): 
+		print('Parent instance method') 
+
+	@classmethod 
+	def m2(cls): 
+		print('Parent class method') 
+
+	@staticmethod 
+	def m3(): 
+		print('Parent static method') 
+
+class C(P): 
+	
+	@classmethod 
+	def m4(cls): 
+		#super().__init__()--->invalid 
+		#super().m1()--->invalid 
+		super().m2() 
+		super().m3()
+
+C.m4()
+
+
+
+How to Call Parent Class Static Method from Child Class Static 
+Method by using super():
+--------------------------------------------------------------
+class A:
+    @staticmethod
+    def m1():
+        print('Parent static method')
+
+class B(A):
+    @staticmethod
+    def m2():
+        super(B,B).m1()
+
+
+B.m2()
+
+Polymorphism:
+-------------
+poly means many. Morphs means forms.
+Polymorphism means 'Many Forms'.
+
+Eg2: + operator acts as concatenation and arithmetic addition
+Eg3: * operator acts as multiplication and repetition operator
+Eg4: The Same method with different implementations in Parent class and child 
+classes.(overriding)
+Related to Polymorphism the following 4 topics are important
+
+1) Duck Typing Philosophy of Python
+
+2) Overloading
+	1) Operator Overloading
+	2) Method Overloading
+	3) Constructor Overloading
+
+3) Overriding
+	1) Method Overriding
+	2) Constructor Overriding
+
+1) Duck Typing Philosophy of Python:
+====================================
+In Python we cannot specify the type explicitly. Based on provided value at 
+runtime the type will be considered automatically. 
+Hence Python is considered as Dynamically Typed Programming Language.
+
+def f1(obj):
+obj.talk()
+
+what is the Type of obj? We cannot decide at the Beginning. 
+At Runtime we can Pass any Type. Then how we can decide the Type?
+
+At runtime if 'it walks like a duck and talks like a duck,it must be duck'. 
+Python follows this principle. This is called Duck Typing Philosophy of Python.
+
+
+class Duck: 
+	def talk(self): 
+		print('Quack.. Quack..') 
+
+class Dog: 
+	def talk(self): 
+		print('Bow Bow..') 
+
+class Cat: 
+	def talk(self): 
+		print('Moew Moew ..') 
+
+class Goat: 
+	def talk(self): 
+		print('Myaah Myaah ..') 
+
+def f1(obj): 
+	obj.talk() 
+
+l=[Duck(),Cat(),Dog(),Goat()] 
+
+for obj in l: 
+	f1(obj)
+
+The problem in this approach is if obj does not contain talk() method then we will get AttributeError
+
+Ex:
+
+class Duck: 
+	def talk(self): 
+		print('Quack.. Quack..') 
+
+class Dog: 
+	def bark(self): 
+		print('Bow Bow..') 
+
+def f1(obj): 
+	obj.talk() 
+
+d=Duck() 
+f1(d) 
+d=Dog() 
+f1(d) 
+
+
+But we can solve this problem by using hasattr() function.
+hasattr(obj,'attributename')  attributename can be Method Name OR Variable Name
+
+Demo Program with hasattr() Function:
+
+class Duck: 
+	def talk(self): 
+		print('Quack.. Quack..') 
+
+class Human: 
+	def talk(self): 
+		print('Hello Hi...') 
+
+class Dog: 
+	def bark(self): 
+		print('Bow Bow..') 
+
+def f1(obj): 
+	if hasattr(obj,'talk'): 
+		obj.talk() 
+	elif hasattr(obj,'bark'): 
+		obj.bark()
+
+d=Duck() 
+f1(d) 
+ 
+h=Human() 
+f1(h) 
+
+d=Dog() 
+f1(d) 
+
+
+2) Overloading
+ We can use same operator or methods for different purposes.
+Eg 1: + operator can be used for Arithmetic addition and String concatenation
+ print(10+20)#30
+ print('blue'+'soft')
+Eg 2: * operator can be used for multiplication and string repetition purposes.
+ print(10*20)#200
+ print('blue'*3)#blueblueblue
+Eg 3: We can use deposit() method to deposit cash or cheque or dd
+ deposit(cash)
+ deposit(cheque)
+ deposit(dd)
+
+There are 3 types of Overloading
+1) Operator Overloading
+2) Method Overloading
+3) Constructor Overloading
+
+
+1)Operator Overloading:
+
+We can use the same operator for multiple purposes, which is nothing but operator 
+overloading.
+
+Python supports operator overloading.
+
+Eg 1: + operator can be used for Arithmetic addition and String concatenation
+ print(10+20)#30
+ print('blue'+'soft')#bluesoft
+
+Eg 2: * operator can be used for multiplication and string repetition purposes.
+ print(10*20)#200
+ print('bluey'*3)#blueyblueybluey
+
+
+Demo program to use + operator for our class objects:
+
+class Book: 
+	def __init__(self,pages): 
+		self.pages=pages 
+ 
+b1=Book(100)
+b2=Book(200) 
+print(b1+b2) 
+
+
+We can overload + operator to work with Book objects also. i.e Python supports 
+Operator Overloading.
+
+For every operator Magic Methods are available. To overload any operator we have to 
+override that Method in our class. 
+
+Internally + operator is implemented by using __add__() method.This method is called 
+magic method for + operator. We have to override this method in our class. 
+
+Ex:
+
+Demo Program to Overload + Operator for Our Book Class Objects:
+
+class Book: 
+	def __init__(self,pages): 
+		self.pages=pages 
+ 
+	def __add__(self,other): 
+		return self.pages+other.pages 
+ 
+b1=Book(100) 
+b2=Book(200) 
+print('The Total Number of Pages:',b1+b2)
+
+Output: The Total Number of Pages: 300
+
+The following is the list of operators and corresponding magic methods.
+1) +  object.__add__(self,other)
+2) -  object.__sub__(self,other)
+3) *  object.__mul__(self,other)
+4) /  object.__div__(self,other)
+5) // object.__floordiv__(self,other)
+6) %  object.__mod__(self,other)
+7) ** object.__pow__(self,other)
+8) += object.__iadd__(self,other)
+9) -= object.__isub__(self,other)
+10) *= object.__imul__(self,other)
+11) /= object.__idiv__(self,other)
+12) //= object.__ifloordiv__(self,other)
+
+
+Program to Overload Multiplication Operator to Work on Employee Objects:
+
+class Employee: 
+	def __init__(self,name,salary): 
+		self.name=name 
+		self.salary=salary
+ 
+	def __mul__(self,other): 
+		return self.salary*other.days
+class TimeSheet: 
+	def __init__(self,name,days): 
+		self.name=name 
+		self.days=days 
+
+e=Employee('Durga',500) 
+t=TimeSheet('Durga',25) 
+
+print('This Month Salary:',e*t) 
+Output: This Month Salary: 12500
+
+
+2)Method Overloading:
+
+If 2 methods having same name but different type of arguments then those methods 
+are said to be overloaded methods.
+ Eg: m1(int a)
+ m1(double d)
+
+But in Python Method overloading is not possible.
+If we are trying to declare multiple methods with same name and different number of 
+arguments then Python will always consider only last method.
+
+Demo Program:
+
+class Test: 
+	def m1(self): 
+		print('no-arg method') 
+	def m1(self,a): 
+		print('one-arg method') 
+	def m1(self,a,b): 
+		print('two-arg method') 
+ 
+t=Test() 
+#t.m1() 
+#t.m1(10) 
+t.m1(10,20) 
+
+
+Output: two-arg method
+In the above program python will consider only last method.
+
+
+class Test:
+	def m1(self,*n):
+		sum=0
+		for i in n:
+			sum+=i
+		print(sum)
+
+t=Test()
+
+t.m1(10,20)
+t.m1(10,20,30)
+
+3)Constructor Overloading:
+
+If 2 constructors having same name but different type of arguments then those methods 
+are said to be overloaded constructors.
+ Eg:
+ __init__(self)
+__init__(self,name,age)
+
+But in Python constructor overloading is not possible.
+If we are trying to declare multiple constructors with same name and different number of 
+arguments then Python will always consider only last constructor.
+
+Ex:
+
+class Test:
+
+	def __init__(self):
+		print("default constructor")
+	def __init__(self,name):
+		print("one argument constructor",name)
+
+	def __init__(self,name,age):
+		print("two argument constructor",name,age)
+
+t=Test()
+t1=Test("smith")
+t2=Test("smith",65)
+
+
+Above code will get TypeError
+
+DEFAULT ARGUMENT CONSTRUCTOR
+----------------------------
+class Test:
+
+	def __init__(self,n=0,n1=1,n2=2):
+		print("constrcutor with default value parameters",n,n1,n2)
+
+t=Test()
+t1=Test(10,20)
+t2=Test(30,40,50)
+
+
+Variable Argument Constructor:
+------------------------------
+
+class Test:
+
+	def __init__(self,*n):
+		for i in n:
+			print(i)
+
+
+t=Test("smith",65)
+t1=Test(10,20)
+t2=Test(30,40,50)
+
+
+methodOverriding:
+=================
+What ever members available in the parent class are bydefault available to the child 
+class through inheritance. If the child class not satisfied with parent class 
+implementation then child class is allowed to redefine that method in the child class 
+based on its requirement. This concept is called overriding.
+
+Overriding concept applicable for both methods and constructors.
+Ex:
+--
+
+
+class Parent:
+	def m1(self):
+		print("we are in parent class m1 method")
+
+class Child(Parent):
+	def m1(self):
+		print("we are in child class m1 method")
+		//super().m1()
+   
+
+c=Child()
+
+c.m1()
+
+
+Demo Program for Constructor Overriding:
+========================================
+class P: 
+	def __init__(self): 
+		print('Parent Constructor')  
+
+class C(P): 
+	def __init__(self):
+		print('Child Constructor') 
+
+c=C()
+
+
+exercises:
+==========
+Check type,issub(),isinstance()of an object:
+
+Write a program to determine which class a given Bus object belongs to.
+
+Given:
+
+class Vehicle:
+    def __init__(self, name, mileage, capacity):
+        self.name = name
+        self.mileage = mileage
+        self.capacity = capacity
+
+class Bus(Vehicle):
+    pass
+
+School_bus = Bus("School Volvo", 12, 50)
+
+
+2)Read text file into a variable and replace all newlines with space
+Given: Assume you have a following text file (sample.txt).
+
+Line1
+line2
+line3
+line4
+line5
+
+Expected Output:
+
+Line1 line2 line3 line4 line5
+
+
+Public, Protected and Private Attributes:
+===========================================
+By default every attribute is public. 
+We can access from anywhere either within the class 
+or from outside of the class.
+
+Eg: name = 'ramu'
+
+Protected attributes can be accessed within the class anywhere but from outside of the 
+class only in child classes.We can specify an attribute as protected by prefexing with _symbol.
+Syntax: _variablename = value
+Eg: _name='ramu'
+
+But is is just convention and in reality does not exists protected attributes.
+
+private attributes can be accessed only within the class.i.e from outside of the class we 
+cannot access. We can declare a variable as private explicitly by prefexing with 2 
+underscore symbols.
+
+syntax: __variablename=value
+
+__name='ramu'
+
+
+class Test: 
+	x=10 #public
+	_y=20  #protected
+	__z=30  #private
+	def m1(self): 
+		print(Test.x) 
+		print(Test._y) 
+		print(Test.__z) 
+
+t=Test() 
+t.m1() 
+
+print(Test.x) 
+print(Test._y) 
+print(t._Test__z)
+
+
+How to Access Private Variables from Outside of the Class:
+-----------------------------------------------------------
+We cannot access private variables directly from outside of the class.
+But we can access indirectly as follows objectreference._classname__variablename
+
+class Test: 
+	def __init__(self):
+		self.__x=10 
+
+t=Test() 
+print(t._Test__x)
+
+
+Abstract Method:
+================
+Sometimes we don't know about implementation, still we can declare a method. 
+Such types of methods are called abstract methods.i.e abstract method has only declaration 
+but not implementation.
+
+In python we can declare abstract method by using @abstractmethod decorator as 
+follows.
+	@abstractmethod
+	def m1(self): pass
+
+@abstractmethod decorator present in abc module. 
+Hence compulsory we should import abc module,otherwise we will get error.
+abc  abstract base class module
+
+
+class Test: 
+	@abstractmethod 
+	def m1(self): 
+		pass 
+NameError: name 'abstractmethod' is not defined
+
+Ex:
+---
+from abc import abstractmethod
+
+class Test: 
+	@abstractmethod 
+	def m1(self): 
+		pass 
+
+Note:
+----
+Child classes are responsible to provide implemention for parent class abstract methods.
+
+
+Abstract class:
+----------------
+Some times implementation of a class is not complete,such type of partially 
+implementation classes are called abstract classes. Every abstract class in Python should 
+be derived from ABC class which is present in abc module.
+
+Case-1:
+from abc import * 
+	class Test: 
+		pass 
+
+t=Test() 
+
+In the above code we can create object for Test class b'z it is concrete class and it does not 
+conatin any abstract method.
+
+Case-2:
+
+from abc import * 
+	class Test(ABC): 
+		pass 
+ 
+t=Test()  
+
+In the above code we can create object, even it is derived from ABC class,b'z it does not 
+contain any abstract method.
+
+
+Case-3:
+
+from abc import * 
+	class Test(ABC): 
+		@abstractmethod 
+		def m1(self): 
+			pass 
+
+
+t=Test() 
+
+
+TypeError: Can't instantiate abstract class Test with abstract methods m
+
+
+Case-4:
+
+from abc import * 
+class Test: 
+	@abstractmethod 
+	def m1(self): 
+		pass 
+
+t=Test() 
+
+We can create object even class contains abstract method b'z we are not extending ABC 
+class.
+
+
+Case-5:
+from abc import * 
+class Test: 
+	@abstractmethod 
+	def m1(self): 
+		print('Hello') 
+ 
+t=Test() 
+t.m1() 
+
+Output: Hello
+
+Conclusion: If a class contains atleast one abstract method and if we are extending ABC 
+class then instantiation is not possible.
+
+
+Interfaces In Python:
+=====================
+In general if an abstract class contains only abstract methods such type of abstract class is 
+considered as interface.
+
+Ex:
+---
+from abc import * 
+class DBInterface(ABC): 
+	@abstractmethod 
+	def connect(self):pass 
+ 	
+	@abstractmethod 
+	def disconnect(self):pass 
+ 
+class Oracle(DBInterface): 
+	def connect(self): 
+		print('Connecting to Oracle Database...') 
+
+	def disconnect(self): 
+	print('Disconnecting to Oracle Database...')
+
+
+
+exercise:
+=========
+Write a Python program to search some literals strings in a string. 
+Go to the editor Sample text : 'The quick brown fox jumps over the lazy dog.' 
+
+Searched words : 'fox', 'dog', 'horse'
+
+REGULAR EXPRESSIONS:
+====================
+If we want to represent a group of Strings according to a particular format/pattern 
+then we should go for Regular Expressions.
+
+i.e Regualr Expressions is a declarative mechanism to represent a group of Strings 
+accroding to particular format/pattern.
+
+Eg 1: We can write a regular expression to represent all mobile numbers
+Eg 2: We can write a regular expression to represent all mail ids
+
+We can develop Regular Expression Based applications by using python module: re
+
+This module contains several inbuilt functions to use Regular Expressions very easily in 
+our applications.
+
+compile():
+----------
+Returns Module contains compile() Function to compile a Pattern into RegexObject.
+ pattern = re.compile("ab")
+
+finditer():
+-----------
+ Returns an Iterator object which yields Match object for every Match
+ matcher = pattern.finditer("abaababa")
+
+On Match object we can call the following methods.
+1) start() -> Returns start index of the match
+2) end() -> Returns end+1 index of the match
+3) group() -> Returns the matched string
+
+import re 
+count=0 
+pattern=re.compile("ab") 
+matcher=pattern.finditer("abaababa") 
+for match in matcher: 
+	count+=1 
+	print(match.start(),"...",match.end(),"...",match.group()) 
+	print("The number of occurrences: ",count)
+
+Output:
+0 ... 2 ... ab
+3 ... 5 ... ab
+5 ... 7 ... ab
+
+The number of occurrences: 3
+
+Ex:
+We can pass pattern directly as argument to finditer() function.
+
+import re 
+count=0 
+matcher=re.finditer("ab","abaababa") 
+for match in matcher: 
+	count+=1 
+	print(match.start(),"...",match.end(),"...",match.group()) 
+	print("The number of occurrences: ",count)
+
+Output:
+0 ... 2 ... ab
+3 ... 5 ... ab
+5 ... 7 ... ab
+The number of occurrences: 3
+
+Character Classes:
+------------------
+We can use character classes to search a group of characters
+
+1) [abc] -> Either a OR b OR c
+2) [^abc] -> Except a and b and c
+3) [a-z] -> Any Lower case alphabet symbol
+4) [A-Z] -> Any upper case alphabet symbol
+5) [a-zA-Z] -> Any alphabet symbol
+6) [0-9] -> Any digit from 0 to 9
+7) [a-zA-Z0-9] -> Any alphanumeric character
+8) [^a-zA-Z0-9] -> Except alphanumeric characters(Special Characters)
+
+
+Pre defined Character Classes:
+1) \s -> Space character
+2) \S -> Any character except space character
+3) \d -> Any digit from 0 to 9
+4) \D -> Any character except digit
+5) \w -> Any word character [a-zA-Z0-9]
+6) \W -> Any character except word character (Special Characters)
+7) . ->  Any character including special character
+
+
+
+Qunatifiers:
+-----------
+We can use quantifiers to specify the number of occurrences to match.
+1) a ->      Exactly one 'a'
+2) a+ ->     Atleast one 'a'
+3) a* ->     Any number of a's including zero number
+4) a? ->     Atmost one 'a' ie either zero number or one number
+5) a{m} ->   Exactly m number of a's
+6) a{m,n} -> Minimum m number of a's and Maximum n number of a'
+
+1) ^x -> It will check whether target string starts with x OR not.
+2) x$ -> It will check whether target string ends with x OR not.
+
+
+Important Functions of Remodule:
+---------------------------------
+1) match()
+2) fullmatch()
+3) search()
+4) findall()
+5) finditer()
+6) sub()
+7) subn()
+8) split()
+9) compile()
+
+match():
+--------
+We can use match function to check the given pattern at beginning of target string.
+If the match is available then we will get Match object, otherwise we will get None.
+
+import re 
+s=input("Enter pattern to check: ") 
+m=re.match(s,"abcabdefg") 
+
+if m!= None: 
+	print("Match is available at the beginning of the String") 
+	print("Start Index:",m.start(), "and End Index:",m.end()) 
+else: 
+	print("Match is not available at the beginning of the String")
+
+
+
+fullmatch():
+-------------
+We can use fullmatch() function to match a pattern to all of target string. i.e complete 
+string should be matched according to given pattern.
+
+If complete string matched then this function returns Match object otherwise it 
+returns None
+
+import re 
+s=input("Enter pattern to check: ")
+m=re.fullmatch(s,"ababab") 
+
+if m!= None: 
+	print("Full String Matched") 
+else: 
+	print("Full String not Matched")
+
+
+search():
+---------
+We can use search() function to search the given pattern in the target string.
+If the match is available then it returns the Match object which represents first 
+occurrence of the match.
+
+If the match is not available then it returns None
+
+import re 
+s=input("Enter pattern to check: ") 
+m=re.search(s,"abaaaba") 
+if m!= None: 
+	print("Match is available") 
+	print("First Occurrence of match with start index:",m.start(),"and end index:",m.end()) 
+else: 
+	print("Match is not available")
+
+
+findall():
+----------
+To find all occurrences of the match.
+This function returns a list object which contains all occurrences.
+
+import re 
+l=re.findall("[0-9]","a7b9c5kz") 
+print(l) 
+
+Output: ['7', '9', '5']
+
+
+finditer():
+-----------
+Returns the iterator yielding a match object for each match.
+On each match object we can call start(), end() and group() functions.
+
+import re 
+itr=re.finditer("[a-z]","a7b9c5k8z") 
+for m in itr: 
+	print(m.start(),"...",m.end(),"...",m.group())
+
+
+sub():
+------
+sub means substitution or replacement.
+re.sub(regex,replacement,targetstring)
+
+In the target string every matched pattern will be replaced with provided replacement.
+
+import re 
+s=re.sub("[a-z]","#","a7b9c5k8z") 
+print(s)
+
+
+
+subn():
+-------
+It is exactly same as sub except it can also returns the number of replacements.
+This function returns a tuple where first element is result string and second element is 
+number of replacements.
+(resultstring, number of replacements)
+
+import re 
+t=re.subn("[a-z]","#","a7b9c5k8z") 
+print(t) 
+print("The Result String:",t[0]) 
+print("The number of replacements:",t[1]) 
+
+
+
+split():
+--------
+If we want to split the given target string according to a particular pattern then we 
+should go for split() function.
+
+This function returns list of all tokens.
+
+import re 
+l=re.split(",","sunny,bunny,vinny,rahul,tillu") 
+print(l) 
+for t in l: 
+	print(t)
+
+
+Ex:2
+----
+s="Weclome#topyhton#re";
+
+l=re.split('|',s)
+
+
+
+
+
+^ symbol:
+---------
+We can use ^ symbol to check whether the given target string starts with our provided 
+pattern or not.
+Eg: res = re.search("^Learn",s)
+
+If the target string starts with learn then it will return Match object,otherwise returns 
+None
+
+import re 
+s="Learning Python is Very Easy" 
+res=re.search("^Learn",s)
+
+if res != None: 
+	print("Target String starts with Learn") 
+else: 
+	print("Target String Not starts with Learn")
+
+
+
+$ symbol:
+---------
+We can use $ symbol to check whether the given target string ends with our 
+provided pattern or not.
+
+Eg: res = re.search("Easy$",s)
+
+If the target string ends with Easy then it will return Match object,otherwise 
+returns None.
+
+import re 
+s="Learning Python is Very Easy" 
+res=re.search("Easy$",s) 
+
+if res != None: 
+	print("Target String ends with Easy") 
+else: 
+	print("Target String Not ends with Easy")
+
+
+Examples:
+---------
+
+Write a Python Program to check whether the given 
+ Number is valid Mobile Number OR not?
+
+[789][0-9] [0-9][0-9][0-9][0-9][0-9][0-9][0-9]
+
+or
+
+[789][0-9]{9}
+
+or
+
+
+[789]\d{9}
+
+
+solu:-
+
+no=input("Enter the mobileno")
+m=re.fullmatch("[789][0-9]{9}",no)
+if m!= None:
+	print("mobileno is matched")
+else:
+	print(mobileno is not matched)
+
+
+
+
+
+
+Write a Python Program to check whether the given mail id is valid 
+gmail id OR not?
+
+soL
+---
+\w[a-zA-Z0-9_.]*@gmail.com
+
+gm=input("Enter the gmail")
+m=re.fullmatch("\\w[a-zA-Z0-9_.]*@gmail.com",gm)
+if m!= None:
+	print("gmail is matched")
+else:
+	print(" gmail is not matched")
+
+
+
+Write a Python program to match a string that contains only upper and lowercase letters, numbers, and underscores?
+
+# Solution
+def text_match(text):
+        patterns = '^[a-zA-Z0-9_]*$'
+        if re.search(patterns,  text):
+                return 'Found a match!'
+        else:
+                return('Not matched!')
+
+print(text_match("The quick brown fox jumps over the lazy dog."))
+print(text_match("Python_Exercises_1"))
+
+Write a Python program to find sequences of lowercase letters joined with a underscore.
+
+# Solution
+def text_match(text):
+        patterns = '^[a-z]+_[a-z]+$'
+        if re.search(patterns,  text):
+                return 'Found a match!'
+        else:
+                return('Not matched!')
+ 
+print(text_match("aab_cbbbc"))
+print(text_match("aab_Abbbc"))
+print(text_match("Aaab_abbbc"))
+
+
+Write a pattern for password
+1)atleast 8 characters and max 12 
+2)It should contain atleast one uppercase
+3)It should contain atleast one digit
+
+Generators:
+===========
+python Generators are used to create the iterators but in a different way. 
+Generally, generators are the functions that can return value several times. 
+
+Python, generator functions are those functions that, instead of returning a single value, return an iterable generator object. You can access or read the values returned from the generator function stored inside a generator object one-by-one using a simple loop or using next() or list() methods.
+
+You can create a generator function using the generator() and yield keywords
+
+Let's imagine, if we define a function and we want to return a value in a couple of times, what we entered into that statement. We can do this statement using normal Python and check what happens, take look in below.
+
+def my_func(x):
+	return x*2
+
+The above result shows that the function gives the value of x, and it can double only once. But, we can use generators it makes double every time when we called the next() function. 
+
+This process will occur when the yield keyword comes into the picture. The yield keyword is the same as the return keyword in normal Python. But, only differences are yield can call so many times as we would like. 
+
+Let's see an example, how generators will work and how it doubles the value.
+
+def my_generator(x):
+	yield x*2
+	yield x*4
+	yield x*8
+
+The above result shows whatever we gave as an input, it shows the result three times. Take a value 2 and pass it to input and finally, it ends the result as 16. Because of a three-time iteration right. Key takeaways: generators.
+
+
+Ex:
+---
+def filter_odd(numbers):
+
+   for number in range(numbers):
+
+       if(number%2!=0):
+
+           yield number 
+
+odd_numbers = filter_odd(20)
+
+print(list(odd_numbers)) #converting generator to list
+
+
+or
+---
+def say_gt():
+	yield "welcome"
+	yield "to"
+	yield "python"
+
+or
+
+def allOper(a,b):
+	yield (a+b)
+	yield (a/b)
+        yield (a*b)
+
+
+l =allOper(10,2)
+for res in l:
+	print(res)
+
+ 
+
+
+
 
 
 
