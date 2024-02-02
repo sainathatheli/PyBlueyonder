@@ -638,6 +638,20 @@ feedback = forms.CharField(widget = forms.Textarea,validators =
 
 Note: Usage of built in validators is very easy when compared with clean methods.
 
+Use Case: Custom validators(user defined message):
+--------------------------------------------------
+How to implement Custom Validators by using the same Validator Parameter:
+-------------------------------------------------------------------------
+The value of name parameter should starts with 'd' or 'D'. We can implement this 
+validation as follows:
+
+def starts_with_d(value): 
+	if value[0].lower() != 'd': 
+	raise forms.ValidationError('Name should be starts with d | D') 
+
+class FeedBackForm(forms.Form): 
+	name=forms.CharField(validators=[starts_with_d]) 
+	rollno=forms.IntegerField() 
 
 
 
@@ -645,6 +659,362 @@ Note: Usage of built in validators is very easy when compared with clean methods
 
 
 
+Model Forms
+-----------
+Model Forms (Forms based on Model):
+
+Sometimes we can create form based on Model, such type of forms are called model 
+based forms or model forms.
+
+The main advantage of model forms is we can grab end user input and we can save 
+that input data very easily to the database.
+
+Django provides inbuilt support to develop model based forms very easily
+
+
+How to develop Model based Forms:
+----------------------------------
+1) While develop FormClass instead of inheriting forms.Form class,we have to inherit 
+forms.ModelForm class.
+ class RegisterForm(forms.ModelForm):
+ 
+2) We have to write one nested class (Meta class) to specify Model information and 
+required fields.
+
+class RegisterForm(forms.ModelForm):
+ # field declarations if we are performing any custom validations.If we are not defining 
+  any custom validations then here we are not required to specify any field.
+
+class Meta:
+ # we have to specify Model class name and requied fields
+ model=Student
+ fields='__all__'
+
+Case-1: 
+-------
+Instead of all fields if we want only selected fields, then we have to specify as follows
+
+class Meta:
+ 	model=Student
+ 	fields=('field1','field2','field3')
+In the form only 3 fields will be considered. 
+
+If Model class contains huge number of fields and we required to consider very less 
+number of fields in the form then we should use this approach.
+
+Case-2:
+-------
+Instead of all fields if we want to exclude certain fields,then we have to specify as follows
+
+class Meta:
+ model=Student
+ exclude=['field1','field2']
+
+In the form all fields will be considered except field1 and field2.
+
+If the Model class contains huge number of fields and if we want to exclude very few fields 
+then we have to use this approach.
+
+How to Save User's Input Data to Database in Model based Forms:
+==================================================================
+We have to use save() method.
+
+def student_view(request):
+ ...
+ if request.method=='POST':
+ 	form=RegisterForm(request.POST)
+	if form.is_valid():
+ 	form.save(commit=True)
 
 
 
+
+studentProject:
+----------------
+create studApp
+
+models.py:
+---------
+from django.db import models
+
+# Create your models here.
+class Student(models.Model):
+    name=models.CharField(max_length=30) 
+    marks=models.IntegerField()
+
+
+admin.py:
+----------
+from django.contrib import admin
+from studApp.models import Student
+# Register your models here.
+
+
+admin.site.register(Student)
+
+add the  your studApp app in setting.py installed[] 
+
+Python manage.py makemigrations
+
+python manage.py sqlmigrate studApp 0001
+
+Python manage.py migrate
+
+
+
+forms.py:
+---------
+from django import forms 
+from studApp.models import Student
+
+class StudentForm(forms.ModelForm): 
+ #fields with validations
+    class Meta:
+        model=Student
+        fields='__all__'
+
+
+views.py:
+---------
+from django.shortcuts import render
+from . import forms 
+
+# Create your views here. 
+def student_view(request):
+    form=forms.StudentForm 
+    if request.method=='POST':
+        form=forms.StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request,'input.html',{'form':form})
+
+
+
+
+input.html:
+------------
+<!DOCTYPE html> 
+{%load static%} 
+<html lang="en"> 
+<head> 
+<meta charset="utf-8"> 
+<title></title> 
+</head> 
+<body> 
+<h1>Registration Form</h1> 
+<div class="container" align="center"> 
+<form method="post"> 
+{{form.as_p}}
+{% csrf_token %} 
+<input type="submit" class="btn btn-primary" name="" value="Submit"> 
+</form> 
+</div> 
+</body> 
+</html> 
+
+Example:
+---------
+
+movieproject:
+---------------
+create movieApp
+
+models.py:
+---------
+from django.db import models  
+# Create your models here. 
+
+class Movie(models.Model): 
+	rdate=models.DateField() 
+	moviename=models.CharField(max_length=30) 
+	hero=models.CharField(max_length=30) 
+	heroine=models.CharField(max_length=30) 
+	rating=models.IntegerField()
+
+
+admin.py:
+---------
+from django.contrib import admin 
+from movieApp.models import Movie 
+# Register your models here. 
+
+admin.site.register(Movie)
+
+forms.py:
+---------
+from django import forms 
+from .models import Movie 
+class MovieForm(forms.ModelForm): 
+	class Meta: 
+	model=Movie 
+	fields='__all__' 
+
+views.py:
+--------
+from django.shortcuts import render 
+from movieApp.forms import MovieForm 
+from movieApp.models import Movie 
+
+# Create your views here. 
+
+def index_view(request): 
+return render(request,'index.html') 
+ 
+def add_movie_view(request): 
+	form=MovieForm() 
+	if request.method=='POST': 
+		form=MovieForm(request.POST) 
+		if form.is_valid(): 
+			form.save() 
+		return index_view(request) 
+	return render(request,'addmovie.html',{'form':form}) 
+ 
+def list_movie_view(request):
+	movies_list=Movie.objects.all().order_by('-rating') 
+	return render(request,'listmovie.html',{'movies_list':movies_list})
+
+
+urls.py
+-------
+from movieApp imports views
+urlspatterns=[
+   path('',views.index_view),
+   path('addmovie/',views.add_movie_view),
+   path('listmovies/',views.list_movie_view)
+
+]
+
+
+index.html:
+-----------
+
+<!DOCTYPE html> 
+{%load static%} 
+<html lang="en" dir="ltr"> 
+<head> 
+<meta charset="utf-8">
+<title></title> 
+
+<link rel="stylesheet" href="{% static "css/movie.css"%}">
+<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesh
+eet"> 
+</head> 
+<body> 
+<div class="container" align="center"> 
+<div class="jumbotron"> 
+<h1>Prasad Movies...</h1> 
+<p>up to date movies information</p> 
+<a class="btn btn-primary btn-lg" href="/addmovie" role="button">Add Movie</a> 
+<a class="btn btn-primary btn-lg" href="/listmovies" role="button">List Movies</a> 
+</div> 
+</div> 
+</body> 
+</html>
+
+
+listmovie.html:
+---------------
+<!DOCTYPE html> 
+{% load cust_filters%} 
+{%load staticfiles%} 
+<html lang="en" dir="ltr"> 
+<head> 
+<meta charset="utf-8"> 
+<title></title> 
+
+<link rel="stylesheet" href="{% static "css/movie.css"%}"> 
+<link href="https://fonts.googleapis.com/css?family=Merriweather"
+rel="stylesheet"> 
+</head> 
+<body> 
+<h1>Movies Information</h1> 
+{% if movies_list %} 
+<table> 
+<thead> 
+<th>Released Date</th> 
+<th>Movie Name</th> 
+<th>Hero</th> 
+<th>Heroine</th> 
+<th>Rating</th> 
+</thead>
+{% for movie in movies_list%} 
+<tr> 
+<td>{{movie.rdate}}</td> 
+<td>{{movie.moviename}}</td>
+<td>{{movie.hero}}</td> 
+<td>{{movie.heroine}}</td> 
+<td>{{movie.rating}}</td> 
+</tr> 
+{% endfor %} 
+</table> 
+{% else %} 
+<p>No Movies Found</p> 
+{%endif%} 
+</body> 
+</html>
+
+
+addmovie.html:
+---------------
+<!DOCTYPE html> 
+{%load staticfiles%} 
+<html lang="en" dir="ltr"> 
+<head> 
+<meta charset="utf-8"> 
+<title></title> 
+ 
+<link rel="stylesheet" href="{% static "css/movie.css"%}"> 
+<link href="https://fonts.googleapis.com/css?family=Merriweather"
+rel="stylesheet"> 
+</head> 
+<body> 
+<div class="container" align='center'> 
+<h1>Add Movie Information</h1><hr> 
+<form method="post"> 
+{{form.as_p}} 
+{%csrf_token%} 
+<input type="submit" class='btn btn-primary' value="Add Movie"> 
+</form> 
+</div> 
+</body> 
+</html>
+
+movie.css
+---------
+body{ 
+background: url(); 
+/* background-repeat: no-repeat;
+ background-size: cover; */ 
+} 
+.container .jumbotron{ 
+margin-top:200px; 
+background: orange; 
+color:white; 
+font-family: 'Merriweather', serif; 
+} 
+table,tr,td,thead,th{ 
+border:2px solid white; 
+font-size: 30px; 
+color:white; 
+background:red; 
+margin:auto; 
+} 
+thead,th{ 
+border:2px solid red; 
+font-size: 30px; 
+color:blue; 
+margin:auto; 
+background:yellow; 
+)} 
+h1{ 
+text-align: center; 
+} 
+
+
+
+
+Python manage.py makemigrations
+
+python manage.py sqlmigrate movieApp 0001
+
+Python manage.py migrate
