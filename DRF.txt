@@ -1,0 +1,593 @@
+API:
+API -> Application Programming Interface:
+-----------------------------------------
+The main objective of API is two applications can communicate with each other. 
+API allows external agent to communicate (integrate and exchange information) with our application.
+In Simple way: 'Methods of communication between software components'
+
+Eg1: By using API a java application can communicate with python application.
+Bookmyshow application can communicate with Payment gateway application to 
+complete our booking.
+
+Eg2: Authentication with Facebook
+Note: Interface of communication between the user and application is nothing but API. 
+The user can be Human user, an android app or desktop application etc
+
+Web API/Web Service:
+----------------------
+The interface of communication between the user and application over the web by using 
+HTTP is nothing but Web API.
+
+
+REST: Representational State Transfer:
+--------------------------------------
+Representational State Transfer(REST) is an architectural style.
+
+It defines several Rules/Guide Lines to develop Web APIs/Web Services By using REST, we can develop web APIs very easily in concise way.
+
+Hence REST is the most popular Architecture to develop Web Services.
+
+
+RESTFul API:
+------------
+The API which is developed by using REST Architecture is nothing but RESTFul API. 
+i.e interface between the user and application where API implements REST Architecture.
+
+Note: REST is basically an architecture where as RESTFul API is an API that implements REST.
+
+DJango Rest Framework:
+---------------------
+Django REST framework is a powerful and flexible toolkit for building Web APIs.
+
+It is the most commonly used framework in Python World to build WEB APIs.
+
+This framework internally uses all Django facilities like models, views, templates, ORM etc
+
+website: https://www.django-rest-framework.org/
+
+Dig,,
+
+By using Web Services, Any application in the world can communicates with any other 
+application irrespective of language (like Java, Python, .Net etc) and platform (like 
+windows,Linux,MAC etc).
+
+The applications can communicate by using HTTP Protocol as the common language.
+The Message Format is XML or JSON.
+
+API: Can be used to access functionality of any application.
+It may be stand alone application/web application/enterprise application
+
+Web API/Web Service:
+Can be used to access functionality of web application by using HTTP
+
+REST: It is an architecture, which provides several guidelines to develop web APIs very 
+easily and effectively.
+
+
+RESTful API: The Web API which implements REST principles is called RESTful API.
+
+Django REST Framework:
+----------------------
+It provides toolkit to develop RESTful APIs for django based applications very easily.
+The main objective of web APIs is interoperability. 
+i.e, different applications can communicate with each other irrespective of develop language and platform.
+
+The common communication language is: HTTP
+
+The common message format is: XML/JSON
+
+Note: The most common data representation in web API is Java Script Object Notation
+(JSON). It is a collection of key-value pairs just like python dictionaries.
+
+{'eno':100,'ename':'durga','esal':1000,'eaddr':'hyd'}
+
+The main advantage of JSON over XML is, it is Machine Friendly and Human Friendly Form.
+
+
+HTTP Verbs:
+-----------
+HTTP Verbs represent the type of operation what we required.
+
+Based on requirement we have to use the corresponding HTTP verb.
+
+The following are various HTTP Verbs
+1) GET -> To get one/more existing resources
+2) POST -> To create a new resource
+3) PUT -> To update an existing resource like update all fields of employee
+4) PATCH -> To perform partial updation of an existing resource like updating only salary 
+of employee
+5) DELETE -> To delete an existing resource.
+
+HTTP Verbs vs Database CRUD Operations:
+-----------------------------------------
+C (CREATE) -> POST
+R (RETRIEVE/READ) -> GET
+U (UPDATE) -> PUT/PATCH
+D (DELETE) -> DELETE
+
+
+Status Codes:
+-------------
+Status code represents the status of HttpResponse. The following are various possible 
+status codes.
+
+1XX -> Informational
+2XX -> Successful
+3XX -> Redirection
+4XX -> Client Error
+5XX -> Server Error
+
+
+Types of Web Services:
+----------------------
+There are 2 types of web services
+1) SOAP Based WebServices
+2) RESTful WebServices
+
+1) SOAP Based Web Services:
+SOAP: Simple Object Access Protocol.
+SOAP is an XML based protocol for accessing web services.
+
+To describe SOAP based web services we have to use a special language: WSDL 
+(Web Service Description Language).
+
+SOAP based web services are more secured. We can consume by using RPC Method 
+calls. These web services can provide support for multiple protocols like HTTP, SMTP,
+FTP etc
+
+Limitations:
+
+1) SOAP Based web services will always provide data only in XML format. Parsing of this 
+XML data is very slow, which creates performance problems.
+
+2) Transfter of XML data over network requires more bandwidth.
+
+3) Implementing SOAP Based Web Services is very difficult.
+
+Note: Because of heavy weight, less performance and more bandwidth requirements, 
+SOAP based web services are not commonly used these days.
+
+
+RESTful Web Services:
+---------------------
+REST stands for Representational State Transfer. It means that each unique URL is a 
+represention of some object. We can get contents of this object by using HTTP GET, we 
+can modify by using PUT/PATCH and we can delete by using DELETE.
+
+We can create by using POST.
+
+Most of the times RESTful web service will provide data in the form of JSON, parsing is 
+not difficult. Hence this type of web services are faster when compared with SOAP 
+based Web Services.
+
+Transfer of JSON Data over the network requires less bandwidth.
+
+Limitations:
+1) It is less secured.
+2) It provide support only for the protocols which can provide URI, mostly HTTP.
+
+
+Web Service Provider vs WebService Consumer:
+--------------------------------------------
+The application which is providing web services is called Web Service Provider.
+The application which is consuming web data through web services, is called Web service consumer.
+
+Eg: Bookmyshow app <--> Payment Gateway app
+
+To complete our booking, bookmyshow application will communicates with payment 
+gateway application. Hence payment gateway applications acts as webservice provider 
+and bookmyshow application acts as web service consumer.
+
+
+
+
+Django View Function to send HTML Response:
+-------------------------------------------
+def employee_data_view(request):
+ 	employee_data={'eno':100,'ename':'maritn','esal':1000,'eaddr':'Hyderabad'}
+ 	resp='<h1>Employee No:{}<br>Employee Name:{}<br>Employee Salary:{}<br>Employee 
+	Address:{}</h1>'.format(employee_data['eno'],employee_data['ename'],employee_data[
+	'esal'],employee_data['eaddr'])
+ 	return HttpResponse(resp)
+
+
+Django View Function to send HTTPResponse with JSON Data:
+---------------------------------------------------------
+To handle json data, python provides inbuilt module: json
+This module contains dumps() function to convert python dictionary to json 
+object.(serialization)
+
+import json
+
+def employee_data_jsonview(request):
+ 	employee_data={'eno':100,'ename':'maritn','esal':1000,'eaddr':'Hyderabad'}
+ 	json_data=json.dumps(employee_data)
+ 	return HttpResponse(json_data,content_type='application/json')
+
+
+Django View Function to send JsonResponse directly:
+----------------------------------------------------
+The main advantage of JsonResponse class is it will accept python dict object directly. It is 
+the most convinient way to provide json response.
+
+from djando.http import JsonResponse
+def employee_data_jsondirectview(request):
+	employee_data={'eno':100,'ename':'maritn','esal':1000,'eaddr':'Hyderabad'}
+ 	return JsonResponse(employee_data)
+
+Python Application to communicate with Django Application:
+----------------------------------------------------------
+From python if we want to send http request we should go for requests module.
+
+test.py:
+--------
+import requests 
+BASE_URL='http://127.0.0.1:8000/' 
+ENDPOINT='api' 
+r=requests.get(BASE_URL+ENDPOINT) 
+data=r.json() 
+print('Employee Number:',data['eno']) 
+print('Employee Name:',data['ename']) 
+print('Employee Salary:',data['esal']) 
+print('Employee Address:',data['eaddr']) 
+
+Note: In the above case, python application communicates with django application to get 
+employee data. For this common language used is: Http and common message format 
+used is JSON.
+
+HTTPie Module:
+--------------
+We can use this module to send http request from commond prompt.
+We can install as follows
+
+pip install httpie
+
+C;\username>http http://127.0.0.1:8000 
+
+
+Class Based View(CBV) to send JSON Response:
+---------------------------------------------
+Every class based view in django should extends View class.It present in the following 
+package.
+
+django.views.generic 
+
+Within the class we have to provide http methods like get(),post() etc
+Whenever we are sending the request, the corresponding method will be executed.
+
+from django.views.generic import View 
+-------------------------------------
+class JsonCBV(View): 
+	def get(self,request,*args,**kwargs): 
+	employee_data={'eno':100,'ename':'martin','esal':1000,'eaddr':'Hyderabad'}
+	return JsonResponse(employee_data) 
+
+
+urls.py:
+-----------
+path('cbv1/', views.JsonCBV.as_view())
+
+*args vs **kwargs:
+*args  Variable Length Arguments
+
+f1(*args)  We can call this function by passing any number of arguments.
+Internally this variable-length argument will be converted into tuple.
+
+def sum(*args): 
+	total=0 
+	for x in args: 
+	total=total+x 
+	print('The Sum:',total) 
+ 
+sum() 
+sum(10) 
+sum(10,20) 
+sum(10,20,30,40) 
+
+Output:
+The Sum: 0
+The Sum: 10
+The Sum: 30
+The Sum: 100
+
+
+**kwargs  Variable Length Keyword Arguments.
+
+f1(**kwargs)  We can call this function by passing any number of keyword arguments. 
+All these keyword arguments will be converted into dictionary.
+
+def f1(**x):
+	print(x) 
+
+f1(name='durga',rollno=101,marks=80,gf1='sunny') 
+Output: {'name': 'smith', 'rollno': 101, 'marks': 80}
+
+
+Mixin(Mixed In):
+----------------
+Mixins are special type of inheritance in Python.
+
+It is limited version of Multiple inheritance.
+In multiple inheritance, we can create object for parent class and parent class can 
+extend other classes. 
+
+But in Mixins, for the parent class we cannot create object and it 
+should be direct child class of object.i.e parent class cannot extend any other classes.
+
+In Multiple inheritance, parent class can contain instance variables.But in Mixins, 
+parent class cannot contain instance variable but can contain class level static 
+variables.
+
+Hence the main purpose of parent class in Mixins is to provide functions to the child classes.
+
+
+mixins.py:
+---------
+from django.http import JsonResponse 
+class JsonResponseMixin(object): 
+	def render_to_json_response(self,context,**kwargs): 
+		return JsonResponse(context,**kwargs) 
+CBV:
+from testapp.mixins import JsonResponseMixin 
+	class JsonCBV2(JsonResponseMixin,View): 
+		def get(self,request,*args,**kwargs):
+			employee_data={'eno':100,'ename':'smith','esal':1000,'eaddr':'Hyderabad'}
+			return self.render_to_json_response(employee_data)
+
+
+
+Serialization:
+--------------
+The process of converting object from one form to another form is called serialization.
+Eg: converting python dictionary object to json
+ json_data = json.dumps(data)
+
+Serialization by using django.core.serializers Module:
+
+djando provides inbuilt module serializers to perform serialization very easily.This module 
+contains serialize() function for this activity.
+
+def get(self,request,id,*args,**kwargs): 
+	emp=Employee.objects.get(id=id) 
+	json_data=serialize('json',[emp,],fields=('eno','ename')) 
+	return HttpResponse(json_data,content_type='application/json') 
+
+If we are not specifying fields attribute, then all fields will be included in json data. 
+For security reasons, if we don't want to provide access to some fields then this fields 
+attribute is very helpful.
+
+Note: Here exclude attribute is not allowed
+
+
+How to disable CSRF Verification:
+=================================
+Just for our testing purposes we can disable CSRF verification, but not recommended 
+in production environment.
+
+We can disable CSRF verification at Function level, class level or at project level
+
+1) To disable at Function/Method Level:
+ from django.views.decorators.csrf import csrf_exempt
+
+ @csrf_exempt
+ def my_view(request):
+ 	body
+
+
+This approach is helpful for Function Based Views(FBVs)
+
+2) To disable at class level:
+
+If we disable at class level then it is applicable for all methods present inside that class. 
+This approach is helpful for class based views(CBVs).
+
+Code:
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+@method_decorator(csrf_exempt,name='dispatch')
+class EmployeeListCBV(SerializeMixin,View):
+
+3) To disable at Project globally:
+ Inside settings.py file comment the following middleware
+ 'django.middleware.csrf.CsrfViewMiddleware'
+
+
+
+
+Installation:
+-------------
+Step-1: Install DRF
+
+pip install djangorestframework
+
+pip install markdown    # Markdown support for the browsable API.
+
+pip install django-filter # Filtering support
+
+Note: After installing all required softwares, it is highly recommended to save installed 
+software information inside a file, so that, it is helpful for production environment to 
+know version requirements.
+
+pip freeze > requirements.txt
+
+
+Step-2: 
+-------
+Add 'rest_framework' to our INSTALLED_APPS settings.py file
+INSTALLED_APPS = [
+ ....
+ 'rest_framework', # 3rd party application
+] 
+
+
+Step-3: Adding required urls inside urls.py:
+
+If we are using the browsable API, to make required urls available,add the following to our 
+urls.py file
+urlpatterns = [
+ ...
+ url(r'^api-auth/', include('rest_framework.urls'))
+]
+
+
+
+
+
+
+
+
+
+
+Crud Operations Using DRF:
+---------------------------
+django-admin startproject app
+
+py manage.py startapp todo
+
+
+Create two additional files serializers.py and urls.py in the directory ./todo.
+
+First, in the ./app/app folder, go to the settings.py and add to INSTALLED_APPS, todo app and rest_framework.
+
+model.py
+--------
+    from django.db import models
+
+    class Todo(models.Model):
+        title = models.CharField(max_length=255)
+        description= models.TextField()
+        deadline = models.DateTimeField()
+        isCompleted= models.BooleanField(default=False)
+
+
+register in admin.py
+--------------------
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+
+
+todo/serializers.py
+--------------
+A Serializer allows us to convert complex data types to native python data types and then convert back to JSON or XML
+
+    from rest_framework import serializers
+    from .models import Todo
+
+    class TodoSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Todo
+            fields = "__all__"
+
+
+
+
+view.py:
+--------
+from django.http.response import Http404
+from django.shortcuts import render
+from rest_framework.views import APIView
+from .models import Todo
+from .serializers import TodoSerializer
+from rest_framework.response import Response
+
+class TodoAPIView(APIView):
+
+    # READ a single Todo
+    def get_object(self, pk):
+        try:
+            return Todo.objects.get(pk=pk)
+        except Todo.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk=None, format=None):
+        if pk:
+            data = self.get_object(pk)
+        else:
+            data = Todo.objects.all()
+
+        serializer = TodoSerializer(data, many=True)
+
+        return Response(serializer.data)
+
+    def post(self, request, format=None): //
+        data = request.data
+        serializer = TodoSerializer(data=data)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        response = Response()
+
+        response.data = {
+            'message': 'Todo Created Successfully',
+            'data': serializer.data
+        }
+
+        return response
+
+    def put(self, request, pk=None, format=None):
+        todo_to_update = Todo.objects.get(pk=pk)
+        serializer = TodoSerializer(instance=todo_to_update,data=request.data, partial=True)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        response = Response()
+
+        response.data = {
+            'message': 'Todo Updated Successfully',
+            'data': serializer.data
+        }
+
+        return response
+
+    def delete(self, request, pk, format=None):
+        todo_to_delete =  Todo.objects.get(pk=pk)
+
+        todo_to_delete.delete()
+
+        return Response({
+            'message': 'Todo Deleted Successfully'
+        })
+
+
+
+urls.py:
+---------
+    from django.urls import path
+    from .views import TodoAPIView
+
+    urlpatterns = [
+        path('todo', TodoAPIView.as_view()),
+        path('todo/<str:pk>', TodoAPIView.as_view()) # to capture our ids
+    ]
+
+
+project level url:
+-------------------
+    from django.contrib import admin
+    from django.urls import path, include
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('api/', include('todo.urls'))
+    ]
+
+Now we can perform CRUD using the endpoint /api/todo.
+
+We have sucessfully crreated a CRUD application with Django Rest Framework
+
+
+localhost:8000/api/todo/{id}
+
+
+
+
+
+
