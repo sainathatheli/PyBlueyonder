@@ -1,0 +1,416 @@
+Using flask-restful:
+--------------------
+Flask Restful is an extension for Flask that adds support for building REST APIs in Python using Flask as the back-end. It encourages best practices and is very easy to set up.
+
+Flask restful is very easy to pick up if you’re already familiar with flask.
+
+In flask_restful, the main building block is a resource. Each resource can have several methods associated with it such as GET, POST, PUT, DELETE, etc. 
+
+for example, there could be a resource that calculates the square of a number whenever a get request is sent to it. 
+
+Each resource is a class that inherits from the Resource class of flask_restful. Once the resource is created and defined, we can add our custom resource to the api and specify a URL path for that corresponding resource.
+
+pip install flask-restful 
+
+Example:
+--------
+app.py
+------
+# using flask_restful 
+from flask import Flask, jsonify, request 
+from flask_restful import Resource, Api 
+  
+# creating the flask app 
+app = Flask(__name__)
+ 
+# creating an API object 
+api = Api(app) 
+  
+# making a class for a particular resource 
+# the get, post methods correspond to get and post requests 
+# they are automatically mapped by flask_restful. 
+# other methods include put, delete, etc. 
+
+class Hello(Resource): 
+  
+    # corresponds to the GET request. 
+    # this function is called whenever there 
+    # is a GET request for this resource 
+    def get(self): 
+  
+        return jsonify({'message': 'hello world'}) 
+  
+    # Corresponds to POST request 
+    def post(self): 
+          
+        data = request.get_json()     # status code 
+        return jsonify({'data': data}), 201
+  
+  
+# another resource to calculate the square of a number 
+class Square(Resource): 
+  
+    def get(self, num): 
+  
+        return jsonify({'square': num**2}) 
+  
+  
+# adding the defined resources along with their corresponding urls 
+api.add_resource(Hello, '/') 
+api.add_resource(Square, '/square/<int:num>') 
+  
+  
+# driver function 
+if __name__ == '__main__': 
+  
+    app.run(debug = True) 
+
+
+
+Example:
+---------
+In this example, we will be creating a RESTful API for a User Class.
+
+First, create a “models.py” file which will contain the User model.
+
+models.py
+---------
+# models.py
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email
+        }
+
+
+
+Additionally, create a “app.py” file to follow along with the example below.
+
+We want to include our imports and set up our Flask app to communicate with our chosen database. Here, we’re using SQLAlchemy.
+
+# app.py 
+--------
+from flask import Flask, request, jsonify
+from flask_restful import Api, Resource
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from flask_migrate import Migrate
+
+from models import db, User
+
+app = Flask(__name__)
+# applies CORS headers to all routes, enabling resources to be accessed
+CORS(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.json.compact = False
+
+migrate = Migrate(app, db)
+db.init_app(app)
+
+db = SQLAlchemy(app)
+api = Api(app) #restframework
+
+Next, we can implement the create API routes in our “app.py” file using flask_restful and define methods for CRUD (create, read, use, delete)
+
+# app.py (2/2)
+class Users(Resource):
+
+    # read
+    def get(self, user_id=None):
+        if user_id:
+            user = User.query.get(user_id)
+            if not user:
+                return {'error': 'User not found'}, 404
+            return {'user': user.to_dict()}, 200
+        else:
+            users = User.query.all()
+            return {'users': [user.to_dict() for user in users]}, 200
+
+    # create
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        email = data.get('email')
+        if not username or not email:
+            return {'error': 'Username and email are required'}, 400
+        new_user = User(username=username, email=email)
+        db.session.add(new_user)
+        db.session.commit()
+        return {'message': 'User added successfully'}, 201
+
+    # update
+    def put(self, user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        data = request.get_json()
+        username = data.get('username')
+        email = data.get('email')
+        if not username or not email:
+            return {'error': 'Username and email are required'}, 400
+        user.username = username
+        user.email = email
+        db.session.commit()
+        return {'message': 'User updated successfully'}, 200
+
+    # delete
+    def delete(self, user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        db.session.delete(user)
+        db.session.commit()
+        return {'message': 'User deleted successfully'}, 200
+
+# use api.add_resource to add the paths
+api.add_resource(Users, '/users', '/users/<int:user_id>')
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
+
+
+
+install the Flask-Cors package:
+--------------------------------
+pip install Flask-Cors
+
+Flask-Migrate
+--------------
+Flask-Migrate is an extension that handles SQLAlchemy database migrations for Flask applications using Alembic. The database operations are made available through the Flask command-line interface.
+
+Installation
+-----------
+Install Flask-Migrate with pip:
+
+pip install Flask-Migrate
+
+Generating the Database
+------------------------
+Here are some helpful commands to run in order to generate and update the tables in your database.
+
+# to set up Flask-Migrate
+$ flask db init migrations
+
+# create an initial empty revision
+$ flask db revision -m 'Create DB'
+
+# run these commands to track your modifications made in models.py
+$ flask db revision --autogenerate -m '<descriptive message>'
+$ flask db upgrade head
+
+
+
+
+Before we can get our server running, we forgot one important step which is to create the actual users! We want to also make a “seed.py” file to populate the database with some fake data using the Faker library.
+
+seed.py
+-------
+from faker import Faker
+from app import app
+from models import db, User
+
+fake = Faker()
+with app.app_context():
+    print("Starting seed...")
+    User.query.delete()
+    new_users = []
+    for _ in range(20):
+        username = fake.user_name()
+        email = fake.email()
+        new_user = User(username=username, email=email)
+        new_users.append(new_user)
+    db.session.add_all(new_users)
+    db.session.commit()
+    print("Successfully seeded")
+
+
+
+
+
+
+Docker:
+-------
+
+Docker is a container management service. The keywords of Docker are develop, ship and run anywhere. The whole idea of Docker is for developers to easily develop applications, ship them into containers which can then be deployed anywhere.
+
+
+Components of Docker
+--------------------
+Docker has the following components
+
+Docker for Mac − It allows one to run Docker containers on the Mac OS.
+
+Docker for Linux − It allows one to run Docker containers on the Linux OS.
+
+Docker for Windows − It allows one to run Docker containers on the Windows OS.
+
+Docker Engine − It is used for building Docker images and creating Docker containers.
+
+Docker Hub − This is the registry which is used to host various Docker images.
+
+Docker Compose − This is used to define applications using multiple Docker containers.
+
+Commands:
+---------
+Build a docker image:
+docker build -t [tag] [dockerfile position]
+
+Create and run Docker container:
+------------------------------
+docker run -d -p [host port]:[container port] [docker image] 
+
+here:-> [host port]:port forwarding
+
+How to see all images
+docker images
+
+How to see all containers
+docker ps
+
+
+basic examples:
+---------------
+Ex:1
+
+app.py
+------
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Hello_World Executing from docker container"
+
+
+Dockerfile
+----------
+FROM ubuntu
+
+RUN apt update
+RUN apt install python3-pip -y
+RUN pip3 install Flask
+
+WORKDIR /app
+
+COPY . .
+
+CMD [ "python3", "-m" , "flask" , "run", "--host=0.0.0.0"]
+
+ 
+build the image
+----------------
+docker build -t flask1 .
+
+run the image:
+--------------
+
+docker run -d -p 5000:5000 flask1
+
+
+to check the process images is run or not:
+==========================================
+docker ps
+
+
+
+
+
+
+Example2:
+---------
+Dockerfile
+----------
+FROM ubuntu
+RUN apt update
+RUN apt install python3-pip -y
+RUN pip3 install Flask
+WORKDIR /app
+COPY . /app
+CMD ["python3", "app.py"]
+
+
+
+
+app.py
+------
+import flask
+from flask import request, jsonify
+app = flask.Flask(__name__)
+
+app.config["DEBUG"] = True
+
+# Create some test data for our catalog in the form of a list of dictionaries.
+books = [
+    {
+        "id": 1,
+        "isbn":"9781593279509",
+        "title":"Eloquent JavaScript, Third Edition",
+        "subtitle":"A Modern Introduction to Programming",
+        "author":"Marijn Haverbeke",
+        "published":"2018-12-04T00:00:00.000Z",
+        "publisher":"No Starch Press",
+        "pages":472,
+        "description":"JavaScript lies at the heart of almost every modern web application, from social apps like Twitter to browser-based game frameworks like Phaser and Babylon. Though simple for beginners to pick up and play with, JavaScript is a flexible, complex language that you can use to build full-scale applications.",
+        "website":"http://eloquentjavascript.net/"
+    },
+    {
+        "id": 2,
+        "isbn":"9781491943533",
+        "title":"Practical Modern JavaScript",
+        "subtitle":"Dive into ES6 and the Future of JavaScript",
+        "author":"Nicolás Bevacqua",
+        "published":"2017-07-16T00:00:00.000Z",
+        "publisher":"O'Reilly Media",
+        "pages":334,
+        "description":"To get the most out of modern JavaScript, you need learn the latest features of its parent specification, ECMAScript 6 (ES6). This book provides a highly practical look at ES6, without getting lost in the specification or its implementation details.",
+        "website":"https://github.com/mjavascript/practical-modern-javascript"
+    }
+]
+@app.route('/', methods=['GET'])
+def home():
+    return '''<h1>VLib - Online Library</h1>
+                <p>A flask api implementation for book information.   </p>'''
+
+@app.route('/api/v1/books/all', methods=['GET'])
+def api_all():
+    return (jsonify(books))
+
+@app.route('/api/v1/books')
+def api_id():
+    if 'id' in request.args:
+        id = int(request.args['id'])
+    else:
+        return "Error: No id field provided. Please specify an id."
+        results = []
+    for book in books:
+        if book['id'] == id:
+            results.append(book)
+            return jsonify(results)
+
+@app.route("/api/v1/books",  methods = ['POST'])
+def api_insert():
+    book = request.get_json()
+    books.append(book)
+    return "Success: Book information has been added."
+
+@app.route("/api/v1/books/<id>", methods=["DELETE"])
+def api_delete(id):
+    for book in books:
+        if book['id'] == int(id):
+            books.remove(book)
+    return "Success: Book information has been deleted."
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
