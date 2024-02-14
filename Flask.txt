@@ -446,7 +446,7 @@ The ORM API provides a way to perform CRUD operations without writing raw SQL st
 
 Flask SQLAlchemy
 ---------------- 
-will study the ORM technology of Flask-SQLAlchemy and build a small web application.
+the ORM technology of Flask-SQLAlchemy and build a small web application.
 
 Step 1 - Install the Flask-SQLAlchemy extension.
 
@@ -459,9 +459,520 @@ from flask_sqlalchemy import SQLAlchemy
 Step 3 - Now create a Flask application object and set the URI for the database to use.
 
 app = Flask (__name__)
+
 app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 
 
+Restapi withCRUD operation using Flask
+--------------------------------------
+setting.py
+----------
+
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+# define sqlite database file path 
+db_dir = os.path.abspath('data.sqlite')
+
+# app settings 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'you-will-never-guess'
+app.config["DEBUG"] = True
+
+# Database connecting for Linux 
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////'+db_dir+'?check_same_thread=False'
+
+# Database connecting for Windows
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+db_dir
+db = SQLAlchemy(app)
 
 
+model.py
+--------
+from settings import db
+from sqlalchemy import Column, Integer, Text
+from datetime import datetime
+
+
+
+class User(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60) )
+    email = db.Column(db.String(60))
+    password = db.Column(db.String(500))
+    mobile_number = db.Column(db.String(300))
+    create_at = db.Column(
+        db.TIMESTAMP,
+        default=datetime.utcnow,
+        nullable=False
+      )
+
+    def __str__(self):
+        return self.name + self.email + str(self.mobile_number)
+
+
+myapp.py
+-------
+from flask import (
+  Flask, request, jsonify)
+from settings import db, app
+from models import User
+
+
+@app.route('/user', methods=['GET'])
+def get_all_users():
+    """
+    this function is map with /user endpoint and 
+    it render all user records using GET Http method
+    """
+    message = {
+      'status': 404,
+      'message': 'Something went wrong'
+    }
+    try:
+        data = User.query.with_entities(
+          User.id, User.name,
+          User.email, User.mobile_number,
+          User.password).all()
+        message.update({
+          'status': 200,
+          'message': 'ALl records are fetched',
+          'data': data
+        })
+    except:
+        pass
+    return jsonify(message)
+
+
+@app.route('/user/<int:id>', methods=['GET'])
+def get_specific_user(id):
+    """
+    this function is map with /user/pk endpoint and 
+    it render specific user records with respect to its pk 
+    using GET Http method
+    """    
+    message = {
+      'status': 404,
+      'message': 'User not exists'
+    }
+    data = User.query.with_entities(User.id, User.name,
+   User.email, User.mobile_number,
+      User.password).filter_by(id=id).all()
+    if len(data) == 0:
+        return jsonify(message)
+    message.update({
+      'status': 200,
+      'message': 'ALl records are fetched',
+      'data': data
+    })
+    return jsonify(message)
+
+
+@app.route('/user', methods=['POST'])
+def create_user():
+    """
+    this function is map with /user endpoint and 
+    it create user records using POST Http method
+    """    
+    message = {
+      'status': 404,
+      'message': 'Something went wrong'
+      }
+    try:
+        name = request.form.get('name', '')
+        email = request.form.get('email', '')
+        password = request.form.get('pwd', '')
+        mobile_number = request.form.get('mobile', '')
+        user = User(
+          name=name,
+          email=email,
+          password=password,
+          mobile_number=mobile_number
+        )
+        db.session.add(user)
+        db.session.commit()
+        message.update({
+            'status': 201,
+            'message': 'User created successfully!!! ',
+            'user_id': user.id
+        })
+    except:
+        pass
+    resp = jsonify(message)
+    return resp
+
+
+@app.route('/user/<int:id>', methods=['PUT'])
+def update_user(id):
+    """
+    this function is map with /user/pk endpoint and 
+    it update specific user records using PUT Http method
+    """  
+    message = {
+      'status': 404,
+      'message': 'user not found'
+    }
+    try:
+        new_name = request.form.get('name', None)
+        new_email = request.form.get('email', None)
+        new_password = request.form.get('pwd', None)
+        new_mobile_number = request.form.get('mobile', None)
+        try:
+            current_user = User.query.get_or_404(id)
+        except:
+            return jsonify(message)
+
+        if new_email:
+            current_user.email = new_email
+        if new_name:
+            current_user.name = new_name
+        if new_password:
+            current_user.password = new_password
+        if new_mobile_number: 
+            current_user.mobile_number = new_mobile_number
+
+        db.session.commit()
+        message.update({
+          'status': 200,
+          'message': 'User details updated successfully!!! '
+        })
+    except:
+        pass
+    resp = jsonify(message)
+    return resp
+
+
+@app.route('/user/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    """
+    this function is map with /user/pk endpoint and 
+    it delete specific user records using DELETE Http method
+    """  
+    message = {
+      'status': 404,
+      'message': 'user not found'
+    }
+    try:
+        current_user = User.query.get_or_404(id)
+        db.session.delete(current_user)
+        db.session.commit()
+        message.update({
+          'status': 200,
+          'message': 'user record delete successfully!!! '
+        })
+    except:
+        pass
+    resp = jsonify(message)
+    return resp
+
+
+if __name__ == "__main__":
+    db.create_all()
+    app.run(host="0.0.0.0", debug=True)
+
+-----------------------------------------------------------------------------------
+
+
+dev.app:
+--------
+from flask import Flask,request,redirect,jsonify
+from flask_sqlalchemy import SQLAlchemy
+app = Flask(__name__)
+
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+
+db=SQLAlchemy(app)
+
+class Developer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+
+    def __init__(self, name):
+        self.name = name
+
+    def serialize(self):
+        return {"id": self.id, 
+                "name": self.name}
+
+
+@app.route('/dev/', methods=['GET'])
+def index():
+    return jsonify({'developers': list(map(lambda dev: dev.serialize(), Developer.query.all()))})
+
+
+@app.route('/dev/<int:id>/')
+def get_dev(id):
+    return jsonify({'developer': Developer.query.get(id).serialize()})
+
+
+@app.route('/dev/', methods=['POST'])
+def create_dev():
+    if not request.json or not 'name' in request.json:
+        abort(400)
+    dev = Developer(request.json['name'])
+    db.session.add(dev)
+    db.session.commit()
+    return jsonify({'developer': dev.serialize()}), 201)
+
+
+@app.route('/dev/<int:id>/', methods=['DELETE'])
+def delete_dev(id):
+    db.session.delete(Developer.query.get(id))
+    db.session.commit()
+    return jsonify({'result': True})
+
+
+@app.route('/dev/<int:id>/', methods=['PUT'])
+def update_dev(id):
+    dev = Developer.query.get(id)
+    dev.name = request.json.get('name', dev.name)
+    db.session.commit()
+    return jsonify({'dev': dev.serialize()})
+
+
+USECASE1:
+----------
+Exchange the data between two restapi services(Employee) and Department()
+
+code:
+-----
+import json
+
+from flask import Flask,request,redirect,jsonify
+from flask_sqlalchemy import SQLAlchemy
+app = Flask(__name__)
+
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+
+db=SQLAlchemy(app)
+
+class Department(db.Model):
+
+    deptno= db.Column(db.Integer, primary_key=True)
+    dname = db.Column(db.String(60))
+    loc = db.Column(db.String(60))
+   
+    def serializer(self):
+        return {
+              "deptno":self.deptno,
+              "dname":self.dname,
+              "loc":self.loc
+               
+        }
+
+    def __str__(self):
+        return self.dname + self.loc
+
+@app.route('/create',methods=['POST'])
+def create_user():
+    if request.method=='POST':
+       d=request.get_json()
+
+       dpt=Department(
+           deptno=d.get('deptno'),
+           dname=d.get('dname'),
+           loc=d.get('loc'),
+       )
+       db.session.add(dpt)
+       db.session.commit()
+
+       message={
+        'data':'Record inserted successfully'
+        }
+       return jsonify(message) #it will convert your dict to json
+
+
+
+@app.route('/list',methods=['GET'])
+def list_users():
+     dpts=Department.query.all()
+     listUser=[]
+     for d in dpts:
+         listUser.append(d.serializer())
+
+     return jsonify(listUser)
+
+@app.route('/get/<id>',methods=['GET'])
+def get_user_by_id(id):
+      u=Department.query.get(int(id)).serializer()
+      return jsonify(u)
+
+@app.route('/delete/<int:id>',methods=['DELETE'])
+def delete_by_id(id):
+      u= Department.query.get(id)
+      if u is not None:
+          db.session.delete(u)
+          db.session.commit()
+          msg={
+               "data":"record is deleted"
+          }
+      else:
+          msg = {
+              "data": "Record doesnot exists"
+          }
+      return jsonify(msg)
+
+@app.route('/update/<int:id>',methods=['PUT'])
+def update_user_id(id):
+    u = Department.query.get(id)
+    #json data from postman
+    dname =request.json.get('dname')
+    loc =request.json.get('loc')
+
+    #update the data
+    u.dname=dname
+    u.loc=loc
+    
+
+    db.session.add(u)
+    db.session.commit()
+    return jsonify({"data":"Record is udpated"})
+
+
+
+with app.app_context():
+    db.create_all() #it will create the tables in database
+
+if __name__=="__main__":
+    app.run(debug=True)
+
+
+emp.py:
+-------
+import json
+import requests
+from flask import Flask,request,redirect,jsonify
+from flask_sqlalchemy import SQLAlchemy
+app = Flask(__name__)
+
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+
+db=SQLAlchemy(app)
+
+class Employee(db.Model):
+
+    empno= db.Column(db.Integer, primary_key=True)
+    ename = db.Column(db.String(60))
+    sal = db.Column(db.Float)
+    deptno=db.Column(db.Integer)
+   
+    def serializer(self):
+        return {
+              "empno":self.empno,
+              "ename":self.ename,
+              "sal":self.sal,
+              "deptno":self.deptno
+               
+        }
+
+
+@app.route('/create',methods=['POST'])
+def create_user():
+    if request.method=='POST':
+       d=request.get_json()
+
+       dpt=Employee(
+           empno=d.get('empno'),
+           ename=d.get('ename'),
+           sal=d.get('sal'),
+           deptno=d.get('deptno')
+       )
+       db.session.add(dpt)
+       db.session.commit()
+
+       message={
+        'data':'Record inserted successfully'
+        }
+       return jsonify(message) #it will convert your dict to json
+
+
+
+@app.route('/list',methods=['GET'])
+def list_users():
+     dpts=Employee.query.all()
+     listUser=[]
+     for d in dpts:
+         listUser.append(d.serializer())
+
+     return jsonify(listUser)
+
+@app.route('/get/<id>',methods=['GET'])
+def get_user_by_id(id):
+      u=Employee.query.get(int(id))
+    
+      empDetails=[]
+      
+      resp=requests.get("http://localhost:5000/get/{}".format(u.deptno))
+      dct={"empno":u.empno,"ename":u.ename,"sal":u.sal,"deptno":u.deptno,
+           "departname":resp.json().get('dname'),
+           "loc":resp.json().get('loc')
+        }
+
+      
+      print(dct)
+      return jsonify(dct)
+
+@app.route('/delete/<int:id>',methods=['DELETE'])
+def delete_by_id(id):
+      u= Employee.query.get(id)
+      if u is not None:
+          db.session.delete(u)
+          db.session.commit()
+          msg={
+               "data":"record is deleted"
+          }
+      else:
+          msg = {
+              "data": "Record doesnot exists"
+          }
+      return jsonify(msg)
+
+@app.route('/update/<int:id>',methods=['PUT'])
+def update_user_id(id):
+    u =Employee.query.get(id)
+    #json data from postman
+    
+    ename =request.json.get('ename')
+    sal=request.json.get('sal')
+    deptno =request.json.get('deptno')
+
+    #update the data
+    u.ename=ename
+    u.sal=sal
+    u.deptno=deptno
+    
+
+    db.session.add(u)
+    db.session.commit()
+    return jsonify({"data":"Record is udpated"})
+
+
+
+with app.app_context():
+    db.create_all() #it will create the tables in database
+
+if __name__=="__main__":
+    app.run(debug=True,port=8000)
+
+
+
+1)create a endpoint url to get the employee data with departments
+
+http://localhost:8000/get/1010  -->it will return empdata(empno,ename,sal,deptno)
+				   with departments(dname,loc)	
+
+output:
+--------
+{
+    "department details": {
+        "deptno": 20,
+        "dname": "accounting",
+        "loc": "Newjersey"
+    },
+    "empno": 1010,
+    "ename": "smith",
+    "sal": 3000.0
+}		
 
