@@ -1,0 +1,76 @@
+Unit Testing is a software testing method by which individual units of source code are tested to determine whether they are fit for use(by comparing expected result with actual result) .
+
+
+why unit test?
+
+Tests Reduce bugs in new features and existing features
+Tests are good documentation
+Tests Reduce the cost of change
+faster Debugging
+Faster Developement
+Better Design
+
+
+Testing FrameworK:
+------------------
+unittest - in the python standard library
+
+nose - Not in the standard Library. Simpler tests than unittest
+
+pytest -Not in the Python Standard Library.
+
+
+
+will work with pytest:
+----------------------
+pip install pytest
+
+filenames:
+----------
+test*.py or *test.py
+
+the test method should be defined with the test_nameofthefunction() or
+testnameofthefunction()
+
+ex: tesfuntionName()  --is not valid
+
+ex:
+---
+test_sample.py
+
+import math
+
+def test_m1():
+    num = 25
+    assert math.sqrt(num)==5
+
+def test_m2():
+    num=7
+    assert 7*7 == 49
+
+def tesm3():      #this will not consider as test function
+    assert 10==10
+
+
+to run the test file:
+---------------------
+pytest test_sample.py
+
+
+Note:
+----
+. (dot)in green color is success of test case 
+F  -- failure(Red color) of the test case function
+E -- Exception occured in the failed test case
+
+
+
+
+
+
+	
+
+
+
+
+
